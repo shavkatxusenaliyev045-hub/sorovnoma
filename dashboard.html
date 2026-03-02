@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Sorovnoma</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="nav-logo">🎯 Sorovnoma</div>
+      <ul class="nav-links">
+        <li class="nav-link" id="nav-home">Home</li>
+        <li class="nav-link" id="nav-survey">Survey</li>
+        <li class="nav-link active" id="nav-dashboard">Dashboard</li>
+      </ul>
+      <div class="nav-auth" id="nav-auth"></div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="page">
+    <div class="container">
+      <!-- Page Header -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem">
+        <div>
+          <h1>Your Dashboard</h1>
+          <p style="margin: 0; color: var(--text-secondary)">Track your survey responses and insights</p>
+        </div>
+        <button class="btn btn-primary" onclick="window.location.href='survey.html'">
+          ✨ Take New Survey
+        </button>
+      </div>
+
+      <!-- Dashboard Layout -->
+      <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <div class="sidebar-item active">👤 Dashboard</div>
+          <div class="sidebar-item">📊 Surveys</div>
+          <div class="sidebar-item">📈 Results</div>
+          <div class="sidebar-item" id="sidebar-profile">👤 Profile</div>
+          <div class="sidebar-item" id="sidebar-logout" style="color: var(--error); cursor: pointer; margin-top: 1rem">
+            🚪 Logout
+          </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+          <!-- Overview Stats -->
+          <section>
+            <h2 style="margin-bottom: 2rem">Overview</h2>
+            <div class="stats-grid">
+              <!-- Total Responses Card -->
+              <div class="stat-card">
+                <div class="stat-value" id="total-responses">0</div>
+                <div class="stat-label">Total Responses</div>
+              </div>
+
+              <!-- Completed Surveys Card -->
+              <div class="stat-card">
+                <div class="stat-value" id="completed-surveys">0</div>
+                <div class="stat-label">Completed Surveys</div>
+              </div>
+
+              <!-- Average Rating Card -->
+              <div class="stat-card">
+                <div class="stat-value" id="average-rating">0</div>
+                <div class="stat-label">Average Rating</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Chart Section -->
+          <section>
+            <h2 style="margin-bottom: 2rem">Response Trends</h2>
+            <div class="chart-container">
+              <h3 class="chart-title">Responses Over Time (Demo Data)</h3>
+              <canvas id="response-chart" width="800" height="300"></canvas>
+            </div>
+          </section>
+
+          <!-- Recent Responses Table -->
+          <section>
+            <h2 style="margin-bottom: 2rem">Recent Responses</h2>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Satisfaction</th>
+                    <th>Rating</th>
+                    <th>Feedback</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="responses-table">
+                  <tr>
+                    <td colspan="5" style="text-align: center; padding: 3rem; color: var(--text-tertiary)">
+                      No survey responses yet. <a href="survey.html" style="color: var(--primary); font-weight: 600">Take your first survey →</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Profile Section -->
+          <section id="profile-section" style="display: none">
+            <h2 style="margin-bottom: 2rem">Profile Settings</h2>
+            <div class="glass" style="padding: 2rem; border-radius: 16px">
+              <div style="margin-bottom: 2rem">
+                <label style="color: var(--text-tertiary); font-weight: 400">Full Name</label>
+                <p id="profile-name" style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0">-</p>
+              </div>
+
+              <div style="margin-bottom: 2rem">
+                <label style="color: var(--text-tertiary); font-weight: 400">Email</label>
+                <p id="profile-email" style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0">-</p>
+              </div>
+
+              <div style="margin-bottom: 2rem">
+                <label style="color: var(--text-tertiary); font-weight: 400">Account Created</label>
+                <p id="profile-date" style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0">-</p>
+              </div>
+
+              <button class="btn btn-secondary" onclick="showSection('dashboard')">← Back to Dashboard</button>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Sorovnoma. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal-overlay" class="modal-overlay"></div>
+
+  <script src="app.js"></script>
+  <script>
+    // Check authentication on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!Auth.requireAuth()) {
+        return;
+      }
+
+      // Load and display stats
+      loadDashboardStats();
+
+      // Load and display responses
+      loadResponses();
+
+      // Draw chart
+      drawResponseChart();
+
+      // Sidebar navigation
+      document.querySelectorAll('.sidebar-item').forEach((item, index) => {
+        if (index === 0) return; // Skip dashboard (already active)
+        item.addEventListener('click', () => {
+          if (item.textContent.includes('Surveys')) {
+            window.location.href = 'survey.html';
+          } else if (item.textContent.includes('Profile') || item.id === 'sidebar-profile') {
+            showSection('profile');
+          }
+        });
+      });
+
+      // Logout button
+      document.getElementById('sidebar-logout').addEventListener('click', () => {
+        AppState.clearUser();
+        Toast.success('Logged out successfully');
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 500);
+      });
+    });
+
+    function loadDashboardStats() {
+      const stats = AppState.getStats();
+
+      document.getElementById('total-responses').textContent = stats.totalResponses;
+      document.getElementById('completed-surveys').textContent = stats.completedSurveys;
+      document.getElementById('average-rating').textContent = `${stats.averageRating} ⭐`;
+    }
+
+    function loadResponses() {
+      const responses = AppState.getResponses();
+      const tableBody = document.getElementById('responses-table');
+
+      if (responses.length === 0) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="5" style="text-align: center; padding: 3rem; color: var(--text-tertiary)">
+              No survey responses yet. <a href="survey.html" style="color: var(--primary); font-weight: 600">Take your first survey →</a>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tableBody.innerHTML = responses
+        .reverse()
+        .map((response, index) => {
+          const satisfaction = response.q1 || 'N/A';
+          const rating = response.rating ? `${response.rating} ⭐` : 'N/A';
+          const feedback = response.q4 ? response.q4.substring(0, 30) + (response.q4.length > 30 ? '...' : '') : 'N/A';
+          const date = new Date(response.timestamp).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+          });
+
+          return `
+            <tr>
+              <td>${responses.length - index}</td>
+              <td>${satisfaction}</td>
+              <td>${rating}</td>
+              <td>${feedback}</td>
+              <td>${date}</td>
+            </tr>
+          `;
+        })
+        .join('');
+    }
+
+    function drawResponseChart() {
+      const canvasId = 'response-chart';
+      const responses = AppState.getResponses();
+
+      // Generate demo data based on response count
+      const data = [];
+      for (let i = 1; i <= 7; i++) {
+        // Simulate daily responses (demo)
+        const randomResponses = Math.floor(Math.random() * 15) + (responses.length > 0 ? 5 : 0);
+        data.push(randomResponses);
+      }
+
+      const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+      Chart.renderBarChart(canvasId, data, labels);
+    }
+
+    function showSection(section) {
+      const dashboardSection = document.querySelector('section:first-of-type');
+      const profileSection = document.getElementById('profile-section');
+
+      if (section === 'profile') {
+        dashboardSection.parentElement.style.display = 'none';
+        profileSection.style.display = 'block';
+
+        // Load profile data
+        document.getElementById('profile-name').textContent = AppState.currentUser.name;
+        document.getElementById('profile-email').textContent = AppState.currentUser.email;
+        document.getElementById('profile-date').textContent = new Date(
+          AppState.currentUser.createdAt
+        ).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        });
+      } else {
+        dashboardSection.parentElement.style.display = 'grid';
+        profileSection.style.display = 'none';
+      }
+    }
+
+    // Responsive sidebar toggle
+    function setupResponsiveSidebar() {
+      if (window.innerWidth <= 768) {
+        document.querySelector('.sidebar').style.display = 'grid';
+        document.querySelector('.sidebar').style.gridTemplateColumns = 'repeat(auto-fit, 1fr)';
+      }
+    }
+
+    setupResponsiveSidebar();
+    window.addEventListener('resize', setupResponsiveSidebar);
+  </script>
+</body>
+</html>

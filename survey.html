@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Take Survey - Sorovnoma</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="nav-logo">🎯 Sorovnoma</div>
+      <ul class="nav-links">
+        <li class="nav-link" id="nav-home">Home</li>
+        <li class="nav-link active" id="nav-survey">Survey</li>
+        <li class="nav-link" id="nav-dashboard">Dashboard</li>
+      </ul>
+      <div class="nav-auth" id="nav-auth"></div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="page">
+    <div class="container">
+      <!-- Survey Header -->
+      <div style="text-align: center; margin-bottom: 3rem">
+        <h1>Customer Feedback Survey</h1>
+        <p style="max-width: 600px; margin: 0 auto">
+          Your feedback is invaluable! Please take 3-5 minutes to answer these questions. Your honest
+          responses help us improve our services.
+        </p>
+      </div>
+
+      <!-- Progress Bar -->
+      <div style="max-width: 700px; margin: 0 auto; margin-bottom: 3rem">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem">
+          <span style="font-weight: 600; color: var(--text-primary)">Progress</span>
+          <span id="progress-text" style="font-size: 0.9rem; color: var(--text-secondary)">1 of 5</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 20%"></div>
+        </div>
+      </div>
+
+      <!-- Stepper -->
+      <div style="max-width: 700px; margin: 0 auto; margin-bottom: 3rem">
+        <div class="stepper">
+          <div class="step active">
+            <div class="step-number">1</div>
+            <div class="step-label">Satisfaction</div>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-label">Features</div>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-label">Rating</div>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-label">Feedback</div>
+          </div>
+          <div class="step">
+            <div class="step-number">5</div>
+            <div class="step-label">Frequency</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Survey Container -->
+      <div id="survey-container" class="survey-container"></div>
+
+      <!-- Survey Controls -->
+      <div class="survey-controls" style="max-width: 700px; margin: 0 auto">
+        <button id="btn-back" class="btn btn-secondary" onclick="Survey.back()" style="display: none">
+          ← Back
+        </button>
+        <button id="btn-next" class="btn btn-primary" onclick="Survey.next()">
+          Next →
+        </button>
+        <button id="btn-submit" class="btn btn-primary" onclick="Survey.submit()" style="display: none; background: linear-gradient(135deg, var(--success) 0%, #059669 100%)">
+          ✓ Submit Survey
+        </button>
+      </div>
+
+      <!-- Survey Info -->
+      <div style="max-width: 700px; margin: 0 auto; margin-top: 3rem; text-align: center; color: var(--text-tertiary); font-size: 0.9rem">
+        <p>💡 This survey is completely anonymous and will take about 3-5 minutes.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Sorovnoma. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal-overlay" class="modal-overlay"></div>
+
+  <script src="app.js"></script>
+  <script>
+    // Check authentication on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!Auth.requireAuth()) {
+        return;
+      }
+
+      // Initialize survey
+      Survey.init();
+
+      // Update progress text on survey step change
+      function updateProgressText() {
+        document.getElementById('progress-text').textContent = `${AppState.currentStep + 1} of ${Survey.questions.length}`;
+      }
+
+      // Monkey patch Survey.renderStep to update progress text
+      const originalRenderStep = Survey.renderStep.bind(Survey);
+      Survey.renderStep = function () {
+        originalRenderStep();
+        updateProgressText();
+      };
+
+      updateProgressText();
+    });
+  </script>
+</body>
+</html>

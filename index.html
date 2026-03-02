@@ -1,14 +1,217 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello world project</title>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sorovnoma - Premium Survey Platform</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="nav-logo">🎯 Sorovnoma</div>
+      <ul class="nav-links">
+        <li class="nav-link active" id="nav-home">Home</li>
+        <li class="nav-link" id="nav-survey">Survey</li>
+        <li class="nav-link" id="nav-dashboard">Dashboard</li>
+      </ul>
+      <div class="nav-auth" id="nav-auth">
+        <button class="btn btn-secondary btn-small" id="nav-login">Login</button>
+      </div>
+    </div>
+  </nav>
 
-  <body>
-    <div id="root"></div>
+  <!-- Main Content -->
+  <main class="page">
+    <!-- Hero Section -->
+    <section class="hero container">
+      <h1>Share Your Voice Through Surveys</h1>
+      <p>
+        Join our premium survey platform to share your opinions, influence decisions, and earn rewards.
+        Your feedback matters!
+      </p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary" onclick="handleStartSurvey()">
+          ✨ Start Survey
+        </button>
+        <button class="btn btn-secondary" onclick="handleGoDashboard()">
+          📊 Go to Dashboard
+        </button>
+      </div>
+    </section>
 
-    <script type="module" src="/client/App.tsx"></script>
-  </body>
+    <!-- Features Section -->
+    <section class="container">
+      <h2 style="text-align: center; margin-bottom: 3rem">Why Choose Sorovnoma?</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem">
+        <!-- Feature 1 -->
+        <div class="card card-glass">
+          <div class="card-icon">🔐</div>
+          <h3>Secure Access</h3>
+          <p>
+            Your data is encrypted and protected with industry-standard security measures. We prioritize
+            your privacy.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="card card-glass">
+          <div class="card-icon">⚡</div>
+          <h3>Fast Responses</h3>
+          <p>
+            Complete surveys in minutes. Our intuitive interface makes it quick and easy to share your
+            feedback.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="card card-glass">
+          <div class="card-icon">📈</div>
+          <h3>Real-Time Results</h3>
+          <p>
+            Track survey results instantly with live analytics. See insights as responses come in from
+            participants.
+          </p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="card card-glass">
+          <div class="card-icon">📱</div>
+          <h3>Fully Responsive</h3>
+          <p>
+            Works seamlessly on all devices. Take surveys anywhere, anytime - desktop, tablet, or mobile.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Active Surveys Section -->
+    <section class="container">
+      <h2 style="text-align: center; margin-bottom: 3rem">Active Surveys</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem">
+        <!-- Survey Card 1 -->
+        <div class="card card-glass">
+          <h3>Customer Satisfaction 2024</h3>
+          <p style="margin-bottom: 1.5rem">
+            Help us improve our products and services by sharing your feedback on customer support quality.
+          </p>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 65%"></div>
+          </div>
+          <p style="font-size: 0.9rem; color: var(--text-tertiary); margin-bottom: 1.5rem">
+            65% Complete (156 responses)
+          </p>
+          <button class="btn btn-primary" style="width: 100%" onclick="handleStartSurvey()">
+            Start Survey →
+          </button>
+        </div>
+
+        <!-- Survey Card 2 -->
+        <div class="card card-glass">
+          <h3>Product Feedback & Ideas</h3>
+          <p style="margin-bottom: 1.5rem">
+            Tell us what features you'd like to see next. Your ideas shape our product roadmap.
+          </p>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 42%"></div>
+          </div>
+          <p style="font-size: 0.9rem; color: var(--text-tertiary); margin-bottom: 1.5rem">
+            42% Complete (89 responses)
+          </p>
+          <button class="btn btn-primary" style="width: 100%" onclick="handleStartSurvey()">
+            Start Survey →
+          </button>
+        </div>
+
+        <!-- Survey Card 3 -->
+        <div class="card card-glass">
+          <h3>Platform User Experience</h3>
+          <p style="margin-bottom: 1.5rem">
+            Rate your experience using our platform and help us identify areas for improvement.
+          </p>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 78%"></div>
+          </div>
+          <p style="font-size: 0.9rem; color: var(--text-tertiary); margin-bottom: 1.5rem">
+            78% Complete (234 responses)
+          </p>
+          <button class="btn btn-primary" style="width: 100%" onclick="handleStartSurvey()">
+            Start Survey →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="container" style="text-align: center; padding: 4rem 2rem; margin-top: 4rem">
+      <div class="glass" style="padding: 3rem">
+        <h2 style="margin-bottom: 1rem">Ready to Make an Impact?</h2>
+        <p style="max-width: 500px; margin: 0 auto 2rem; font-size: 1.1rem">
+          Join thousands of users who are already sharing their feedback and shaping the future of great
+          products.
+        </p>
+        <button class="btn btn-primary" onclick="handleStartSurvey()" style="font-size: 1.1rem; padding: 1rem 2rem">
+          Get Started Now ✨
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>🎯 Sorovnoma</h4>
+        <p>Premium survey platform for genuine feedback.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="#" onclick="handleStartSurvey()">Start Survey</a>
+          <a href="#" onclick="handleGoDashboard()">Dashboard</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Follow Us</h4>
+        <div class="social-icons">
+          <div class="social-icon">f</div>
+          <div class="social-icon">𝕏</div>
+          <div class="social-icon">in</div>
+          <div class="social-icon">IG</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Sorovnoma. All rights reserved. Built with premium care.</p>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal-overlay" class="modal-overlay"></div>
+
+  <script src="app.js"></script>
+  <script>
+    function handleStartSurvey() {
+      if (!Auth.isAuthenticated()) {
+        AppState.returnUrl = 'survey.html';
+        sessionStorage.setItem('returnUrl', 'survey.html');
+        window.location.href = 'auth.html';
+      } else {
+        window.location.href = 'survey.html';
+      }
+    }
+
+    function handleGoDashboard() {
+      if (!Auth.isAuthenticated()) {
+        AppState.returnUrl = 'dashboard.html';
+        sessionStorage.setItem('returnUrl', 'dashboard.html');
+        window.location.href = 'auth.html';
+      } else {
+        window.location.href = 'dashboard.html';
+      }
+    }
+  </script>
+</body>
 </html>
