@@ -12,12 +12,20 @@
     <div class="nav-container">
       <div class="nav-logo">🎯 Sorovnoma</div>
       <ul class="nav-links">
-        <li class="nav-link active" id="nav-home">Home</li>
-        <li class="nav-link" id="nav-survey">Survey</li>
-        <li class="nav-link" id="nav-dashboard">Dashboard</li>
+        <li class="nav-link active" id="nav-home" data-i18n="navbar.home">Home</li>
+        <li class="nav-link" id="nav-survey" data-i18n="navbar.survey">Survey</li>
+        <li class="nav-link" id="nav-dashboard" data-i18n="navbar.dashboard">Dashboard</li>
       </ul>
-      <div class="nav-auth" id="nav-auth">
-        <button class="btn btn-secondary btn-small" id="nav-login">Login</button>
+      <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap">
+        <!-- Language Switcher -->
+        <div class="language-switcher">
+          <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
+          <button class="lang-btn" data-lang="uz" onclick="setLanguage('uz')">UZ</button>
+          <button class="lang-btn" data-lang="ru" onclick="setLanguage('ru')">РУ</button>
+        </div>
+        <div class="nav-auth" id="nav-auth">
+          <button class="btn btn-secondary btn-small" id="nav-login" data-i18n="navbar.login">Login</button>
+        </div>
       </div>
     </div>
   </nav>
@@ -26,16 +34,16 @@
   <main class="page">
     <!-- Hero Section -->
     <section class="hero container">
-      <h1>Share Your Voice Through Surveys</h1>
-      <p>
+      <h1 data-i18n="home.heroTitle">Share Your Voice Through Surveys</h1>
+      <p data-i18n="home.heroDescription">
         Join our premium survey platform to share your opinions, influence decisions, and earn rewards.
         Your feedback matters!
       </p>
       <div class="hero-buttons">
-        <button class="btn btn-primary" onclick="handleStartSurvey()">
+        <button class="btn btn-primary" onclick="handleStartSurvey()" data-i18n="home.startSurvey">
           ✨ Start Survey
         </button>
-        <button class="btn btn-secondary" onclick="handleGoDashboard()">
+        <button class="btn btn-secondary" onclick="handleGoDashboard()" data-i18n="home.goDashboard">
           📊 Go to Dashboard
         </button>
       </div>
@@ -43,13 +51,13 @@
 
     <!-- Features Section -->
     <section class="container">
-      <h2 style="text-align: center; margin-bottom: 3rem">Why Choose Sorovnoma?</h2>
+      <h2 style="text-align: center; margin-bottom: 3rem" data-i18n="home.whyChoose">Why Choose Sorovnoma?</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem">
         <!-- Feature 1 -->
         <div class="card card-glass">
           <div class="card-icon">🔐</div>
-          <h3>Secure Access</h3>
-          <p>
+          <h3 data-i18n="home.secureTitle">Secure Access</h3>
+          <p data-i18n="home.secureDesc">
             Your data is encrypted and protected with industry-standard security measures. We prioritize
             your privacy.
           </p>
@@ -58,8 +66,8 @@
         <!-- Feature 2 -->
         <div class="card card-glass">
           <div class="card-icon">⚡</div>
-          <h3>Fast Responses</h3>
-          <p>
+          <h3 data-i18n="home.fastTitle">Fast Responses</h3>
+          <p data-i18n="home.fastDesc">
             Complete surveys in minutes. Our intuitive interface makes it quick and easy to share your
             feedback.
           </p>
@@ -68,8 +76,8 @@
         <!-- Feature 3 -->
         <div class="card card-glass">
           <div class="card-icon">📈</div>
-          <h3>Real-Time Results</h3>
-          <p>
+          <h3 data-i18n="home.resultsTitle">Real-Time Results</h3>
+          <p data-i18n="home.resultsDesc">
             Track survey results instantly with live analytics. See insights as responses come in from
             participants.
           </p>
@@ -78,8 +86,8 @@
         <!-- Feature 4 -->
         <div class="card card-glass">
           <div class="card-icon">📱</div>
-          <h3>Fully Responsive</h3>
-          <p>
+          <h3 data-i18n="home.responsiveTitle">Fully Responsive</h3>
+          <p data-i18n="home.responsiveDesc">
             Works seamlessly on all devices. Take surveys anywhere, anytime - desktop, tablet, or mobile.
           </p>
         </div>
@@ -88,7 +96,7 @@
 
     <!-- Active Surveys Section -->
     <section class="container">
-      <h2 style="text-align: center; margin-bottom: 3rem">Active Surveys</h2>
+      <h2 style="text-align: center; margin-bottom: 3rem" data-i18n="home.activeSurveys">Active Surveys</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem">
         <!-- Survey Card 1 -->
         <div class="card card-glass">
@@ -100,9 +108,9 @@
             <div class="progress-fill" style="width: 65%"></div>
           </div>
           <p style="font-size: 0.9rem; color: var(--text-tertiary); margin-bottom: 1.5rem">
-            65% Complete (156 responses)
+            65<span data-i18n="home.surveyComplete"> % Complete</span> (156 responses)
           </p>
-          <button class="btn btn-primary" style="width: 100%" onclick="handleStartSurvey()">
+          <button class="btn btn-primary" style="width: 100%" onclick="handleStartSurvey()" data-i18n="home.startSurveyBtn">
             Start Survey →
           </button>
         </div>
@@ -117,9 +125,9 @@
             <div class="progress-fill" style="width: 42%"></div>
           </div>
           <p style="font-size: 0.9rem; color: var(--text-tertiary); margin-bottom: 1.5rem">
-            42% Complete (89 responses)
+            42<span data-i18n="home.surveyComplete"> % Complete</span> (89 responses)
           </p>
-          <button class="btn btn-primary" style="width: 100%" onclick="handleStartSurvey()">
+          <button class="btn btn-primary" style="width: 100%" onclick="handleStartSurvey()" data-i18n="home.startSurveyBtn">
             Start Survey →
           </button>
         </div>
@@ -134,9 +142,9 @@
             <div class="progress-fill" style="width: 78%"></div>
           </div>
           <p style="font-size: 0.9rem; color: var(--text-tertiary); margin-bottom: 1.5rem">
-            78% Complete (234 responses)
+            78<span data-i18n="home.surveyComplete"> % Complete</span> (234 responses)
           </p>
-          <button class="btn btn-primary" style="width: 100%" onclick="handleStartSurvey()">
+          <button class="btn btn-primary" style="width: 100%" onclick="handleStartSurvey()" data-i18n="home.startSurveyBtn">
             Start Survey →
           </button>
         </div>
@@ -146,12 +154,12 @@
     <!-- CTA Section -->
     <section class="container" style="text-align: center; padding: 4rem 2rem; margin-top: 4rem">
       <div class="glass" style="padding: 3rem">
-        <h2 style="margin-bottom: 1rem">Ready to Make an Impact?</h2>
-        <p style="max-width: 500px; margin: 0 auto 2rem; font-size: 1.1rem">
+        <h2 style="margin-bottom: 1rem" data-i18n="home.ready">Ready to Make an Impact?</h2>
+        <p style="max-width: 500px; margin: 0 auto 2rem; font-size: 1.1rem" data-i18n="home.readyDesc">
           Join thousands of users who are already sharing their feedback and shaping the future of great
           products.
         </p>
-        <button class="btn btn-primary" onclick="handleStartSurvey()" style="font-size: 1.1rem; padding: 1rem 2rem">
+        <button class="btn btn-primary" onclick="handleStartSurvey()" style="font-size: 1.1rem; padding: 1rem 2rem" data-i18n="home.getStarted">
           Get Started Now ✨
         </button>
       </div>
@@ -166,11 +174,11 @@
         <p>Premium survey platform for genuine feedback.</p>
       </div>
       <div class="footer-section">
-        <h4>Quick Links</h4>
+        <h4 data-i18n="navbar.home">Quick Links</h4>
         <div class="footer-links">
-          <a href="index.html">Home</a>
-          <a href="#" onclick="handleStartSurvey()">Start Survey</a>
-          <a href="#" onclick="handleGoDashboard()">Dashboard</a>
+          <a href="index.html" data-i18n="navbar.home">Home</a>
+          <a href="#" onclick="handleStartSurvey()" data-i18n="home.startSurvey">Start Survey</a>
+          <a href="#" onclick="handleGoDashboard()" data-i18n="navbar.dashboard">Dashboard</a>
         </div>
       </div>
       <div class="footer-section">
@@ -184,7 +192,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2024 Sorovnoma. All rights reserved. Built with premium care.</p>
+      <p data-i18n="home.footerCopyright">&copy; 2024 Sorovnoma. All rights reserved. Built with premium care.</p>
     </div>
   </footer>
 
@@ -193,6 +201,30 @@
 
   <script src="app.js"></script>
   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Update language buttons
+      updateLanguageButtons();
+
+      // Apply saved language
+      applyTranslations(currentLanguage);
+    });
+
+    function updateLanguageButtons() {
+      document.querySelectorAll('.lang-btn').forEach((btn) => {
+        btn.classList.remove('active');
+        if (btn.dataset.lang === currentLanguage) {
+          btn.classList.add('active');
+        }
+      });
+    }
+
+    // Override setLanguage to update buttons
+    const originalSetLanguage = window.setLanguage;
+    window.setLanguage = function (lang) {
+      originalSetLanguage(lang);
+      updateLanguageButtons();
+    };
+
     function handleStartSurvey() {
       if (!Auth.isAuthenticated()) {
         AppState.returnUrl = 'survey.html';

@@ -12,7 +12,12 @@
     <div class="nav-container">
       <div class="nav-logo">🎯 Sorovnoma</div>
       <div style="flex: 1"></div>
-      <a href="index.html" class="nav-link">Back to Home</a>
+      <div class="language-switcher">
+        <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
+        <button class="lang-btn" data-lang="uz" onclick="setLanguage('uz')">UZ</button>
+        <button class="lang-btn" data-lang="ru" onclick="setLanguage('ru')">РУ</button>
+      </div>
+      <a href="index.html" class="nav-link" data-i18n="auth.backToHome">Back to Home</a>
     </div>
   </nav>
 
@@ -45,6 +50,7 @@
               font-weight: 600;
               transition: all var(--transition-base);
             "
+            data-i18n="auth.login"
           >
             Login
           </button>
@@ -60,6 +66,7 @@
               font-weight: 600;
               transition: all var(--transition-base);
             "
+            data-i18n="auth.signup"
           >
             Sign Up
           </button>
@@ -67,14 +74,15 @@
 
         <!-- Login Form -->
         <form id="login-form" class="auth-form" style="display: block">
-          <h2 style="text-align: center; margin-bottom: 2rem">Welcome Back</h2>
+          <h2 style="text-align: center; margin-bottom: 2rem" data-i18n="auth.welcomeBack">Welcome Back</h2>
 
           <div class="form-group">
-            <label>Email Address</label>
+            <label data-i18n="auth.email">Email Address</label>
             <input
               type="email"
               id="login-email"
               data-field="login-email"
+              data-i18n-placeholder="auth.emailPlaceholder"
               placeholder="you@example.com"
               required
             />
@@ -82,11 +90,12 @@
           </div>
 
           <div class="form-group">
-            <label>Password</label>
+            <label data-i18n="auth.password">Password</label>
             <input
               type="password"
               id="login-password"
               data-field="login-password"
+              data-i18n-placeholder="auth.passwordPlaceholder"
               placeholder="••••••••"
               required
             />
@@ -94,7 +103,7 @@
           </div>
 
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem">
-            <label style="display: flex; align-items: center; margin: 0; font-weight: 400">
+            <label style="display: flex; align-items: center; margin: 0; font-weight: 400" data-i18n="auth.rememberMe">
               <input
                 type="checkbox"
                 id="remember-me"
@@ -102,16 +111,16 @@
               />
               Remember me
             </label>
-            <a href="#" style="font-size: 0.9rem; color: var(--primary)">Forgot password?</a>
+            <a href="#" style="font-size: 0.9rem; color: var(--primary)" data-i18n="auth.forgotPassword">Forgot password?</a>
           </div>
 
-          <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem">
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem" data-i18n="auth.signIn">
             Sign In
           </button>
 
           <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem">
-            Don't have an account?
-            <a href="#" onclick="switchTab('signup')" style="color: var(--primary); font-weight: 600">
+            <span data-i18n="auth.dontHaveAccount">Don't have an account?</span>
+            <a href="#" onclick="switchTab('signup')" style="color: var(--primary); font-weight: 600" data-i18n="auth.createOne">
               Create one
             </a>
           </p>
@@ -119,14 +128,15 @@
 
         <!-- Signup Form -->
         <form id="signup-form" class="auth-form" style="display: none">
-          <h2 style="text-align: center; margin-bottom: 2rem">Create Account</h2>
+          <h2 style="text-align: center; margin-bottom: 2rem" data-i18n="auth.createAccount">Create Account</h2>
 
           <div class="form-group">
-            <label>Full Name</label>
+            <label data-i18n="auth.fullName">Full Name</label>
             <input
               type="text"
               id="signup-fullname"
               data-field="signup-fullname"
+              data-i18n-placeholder="auth.fullNamePlaceholder"
               placeholder="John Doe"
               required
             />
@@ -134,11 +144,12 @@
           </div>
 
           <div class="form-group">
-            <label>Email Address</label>
+            <label data-i18n="auth.email">Email Address</label>
             <input
               type="email"
               id="signup-email"
               data-field="signup-email"
+              data-i18n-placeholder="auth.emailPlaceholder"
               placeholder="you@example.com"
               required
             />
@@ -146,29 +157,31 @@
           </div>
 
           <div class="form-group">
-            <label>Password</label>
+            <label data-i18n="auth.password">Password</label>
             <input
               type="password"
               id="signup-password"
               data-field="signup-password"
+              data-i18n-placeholder="auth.passwordPlaceholder"
               placeholder="••••••••"
               required
             />
             <div class="password-strength">
               <div class="password-strength-bar" id="password-strength-bar"></div>
             </div>
-            <div class="password-strength-text" id="password-strength-text">
+            <div class="password-strength-text" id="password-strength-text" data-i18n="auth.passwordMin">
               At least 8 characters
             </div>
             <div class="form-error"></div>
           </div>
 
           <div class="form-group">
-            <label>Confirm Password</label>
+            <label data-i18n="auth.confirmPassword">Confirm Password</label>
             <input
               type="password"
               id="signup-confirm"
               data-field="signup-confirm"
+              data-i18n-placeholder="auth.passwordPlaceholder"
               placeholder="••••••••"
               required
             />
@@ -182,18 +195,18 @@
               style="width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0"
               required
             />
-            <label style="font-weight: 400; margin: 0">
+            <label style="font-weight: 400; margin: 0" data-i18n="auth.agreeTerms">
               I agree to the Terms of Service and Privacy Policy
             </label>
           </div>
 
-          <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem">
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem" data-i18n="auth.signup">
             Create Account
           </button>
 
           <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem">
-            Already have an account?
-            <a href="#" onclick="switchTab('login')" style="color: var(--primary); font-weight: 600">
+            <span data-i18n="auth.alreadyHave">Already have an account?</span>
+            <a href="#" onclick="switchTab('login')" style="color: var(--primary); font-weight: 600" data-i18n="auth.login">
               Sign in
             </a>
           </p>
@@ -202,7 +215,7 @@
 
       <!-- Trust Indicators -->
       <div style="margin-top: 2rem; text-align: center; color: var(--text-tertiary); font-size: 0.9rem">
-        <p>🔐 Secure • 🚀 Fast • 📊 Reliable</p>
+        <p><span data-i18n="auth.secure">🔐 Secure</span> • <span data-i18n="auth.fast">🚀 Fast</span> • <span data-i18n="auth.reliable">📊 Reliable</span></p>
       </div>
     </div>
   </main>
@@ -212,6 +225,27 @@
 
   <script src="app.js"></script>
   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      updateLanguageButtons();
+      applyTranslations(currentLanguage);
+    });
+
+    function updateLanguageButtons() {
+      document.querySelectorAll('.lang-btn').forEach((btn) => {
+        btn.classList.remove('active');
+        if (btn.dataset.lang === currentLanguage) {
+          btn.classList.add('active');
+        }
+      });
+    }
+
+    // Override setLanguage to update buttons
+    const originalSetLanguage = window.setLanguage;
+    window.setLanguage = function (lang) {
+      originalSetLanguage(lang);
+      updateLanguageButtons();
+    };
+
     // Tab switching
     function switchTab(tab) {
       // Update buttons
@@ -250,11 +284,11 @@
       bar.classList.add(strength);
 
       if (strength === 'weak') {
-        text.textContent = 'Password is weak';
+        text.textContent = getTranslation('auth.passwordWeak');
       } else if (strength === 'fair') {
-        text.textContent = 'Password is fair - add numbers or symbols for stronger password';
+        text.textContent = getTranslation('auth.passwordFair');
       } else {
-        text.textContent = 'Password is strong';
+        text.textContent = getTranslation('auth.passwordStrong');
       }
     });
 
@@ -269,7 +303,7 @@
       const result = Auth.signin(email, password);
 
       if (result.success) {
-        Toast.success('Logged in successfully! Redirecting...');
+        Toast.success(getTranslation('toast.loggedIn'));
         setTimeout(() => {
           const returnUrl = AppState.returnUrl;
           sessionStorage.removeItem('returnUrl');
@@ -294,20 +328,20 @@
 
       // Validate password match
       if (password !== confirmPassword) {
-        FormValidator.showError('signup-confirm', 'Passwords do not match');
+        FormValidator.showError('signup-confirm', getTranslation('errors.passwordMismatch'));
         return;
       }
 
       // Validate terms
       if (!document.getElementById('terms').checked) {
-        Toast.error('Please agree to the Terms of Service');
+        Toast.error(getTranslation('errors.agreeTerms'));
         return;
       }
 
       const result = Auth.signup(fullName, email, password);
 
       if (result.success) {
-        Toast.success('Account created successfully! Redirecting...');
+        Toast.success(getTranslation('toast.accountCreated'));
         setTimeout(() => {
           const returnUrl = AppState.returnUrl;
           sessionStorage.removeItem('returnUrl');

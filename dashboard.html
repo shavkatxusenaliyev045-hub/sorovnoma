@@ -12,11 +12,19 @@
     <div class="nav-container">
       <div class="nav-logo">🎯 Sorovnoma</div>
       <ul class="nav-links">
-        <li class="nav-link" id="nav-home">Home</li>
-        <li class="nav-link" id="nav-survey">Survey</li>
-        <li class="nav-link active" id="nav-dashboard">Dashboard</li>
+        <li class="nav-link" id="nav-home" data-i18n="navbar.home">Home</li>
+        <li class="nav-link" id="nav-survey" data-i18n="navbar.survey">Survey</li>
+        <li class="nav-link active" id="nav-dashboard" data-i18n="navbar.dashboard">Dashboard</li>
       </ul>
-      <div class="nav-auth" id="nav-auth"></div>
+      <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap">
+        <!-- Language Switcher -->
+        <div class="language-switcher">
+          <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
+          <button class="lang-btn" data-lang="uz" onclick="setLanguage('uz')">UZ</button>
+          <button class="lang-btn" data-lang="ru" onclick="setLanguage('ru')">РУ</button>
+        </div>
+        <div class="nav-auth" id="nav-auth"></div>
+      </div>
     </div>
   </nav>
 
@@ -26,10 +34,10 @@
       <!-- Page Header -->
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem">
         <div>
-          <h1>Your Dashboard</h1>
-          <p style="margin: 0; color: var(--text-secondary)">Track your survey responses and insights</p>
+          <h1 data-i18n="dashboard.title">Your Dashboard</h1>
+          <p style="margin: 0; color: var(--text-secondary)" data-i18n="dashboard.subtitle">Track your survey responses and insights</p>
         </div>
-        <button class="btn btn-primary" onclick="window.location.href='survey.html'">
+        <button class="btn btn-primary" onclick="window.location.href='survey.html'" data-i18n="dashboard.takeNewSurvey">
           ✨ Take New Survey
         </button>
       </div>
@@ -38,11 +46,11 @@
       <div class="dashboard-layout">
         <!-- Sidebar -->
         <aside class="sidebar">
-          <div class="sidebar-item active">👤 Dashboard</div>
-          <div class="sidebar-item">📊 Surveys</div>
-          <div class="sidebar-item">📈 Results</div>
-          <div class="sidebar-item" id="sidebar-profile">👤 Profile</div>
-          <div class="sidebar-item" id="sidebar-logout" style="color: var(--error); cursor: pointer; margin-top: 1rem">
+          <div class="sidebar-item active" data-i18n="dashboard.dashboardNav">👤 Dashboard</div>
+          <div class="sidebar-item" data-i18n="dashboard.surveysNav">📊 Surveys</div>
+          <div class="sidebar-item" data-i18n="dashboard.resultsNav">📈 Results</div>
+          <div class="sidebar-item" id="sidebar-profile" data-i18n="dashboard.profileNav">👤 Profile</div>
+          <div class="sidebar-item" id="sidebar-logout" style="color: var(--error); cursor: pointer; margin-top: 1rem" data-i18n="dashboard.logoutNav">
             🚪 Logout
           </div>
         </aside>
@@ -51,55 +59,55 @@
         <main class="main-content">
           <!-- Overview Stats -->
           <section>
-            <h2 style="margin-bottom: 2rem">Overview</h2>
+            <h2 style="margin-bottom: 2rem" data-i18n="dashboard.overview">Overview</h2>
             <div class="stats-grid">
               <!-- Total Responses Card -->
               <div class="stat-card">
                 <div class="stat-value" id="total-responses">0</div>
-                <div class="stat-label">Total Responses</div>
+                <div class="stat-label" data-i18n="dashboard.totalResponses">Total Responses</div>
               </div>
 
               <!-- Completed Surveys Card -->
               <div class="stat-card">
                 <div class="stat-value" id="completed-surveys">0</div>
-                <div class="stat-label">Completed Surveys</div>
+                <div class="stat-label" data-i18n="dashboard.completedSurveys">Completed Surveys</div>
               </div>
 
               <!-- Average Rating Card -->
               <div class="stat-card">
                 <div class="stat-value" id="average-rating">0</div>
-                <div class="stat-label">Average Rating</div>
+                <div class="stat-label" data-i18n="dashboard.averageRating">Average Rating</div>
               </div>
             </div>
           </section>
 
           <!-- Chart Section -->
           <section>
-            <h2 style="margin-bottom: 2rem">Response Trends</h2>
+            <h2 style="margin-bottom: 2rem" data-i18n="dashboard.trends">Response Trends</h2>
             <div class="chart-container">
-              <h3 class="chart-title">Responses Over Time (Demo Data)</h3>
+              <h3 class="chart-title" data-i18n="dashboard.responsesOverTime">Responses Over Time (Demo Data)</h3>
               <canvas id="response-chart" width="800" height="300"></canvas>
             </div>
           </section>
 
           <!-- Recent Responses Table -->
           <section>
-            <h2 style="margin-bottom: 2rem">Recent Responses</h2>
+            <h2 style="margin-bottom: 2rem" data-i18n="dashboard.recentResponses">Recent Responses</h2>
             <div class="table-container">
               <table>
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Satisfaction</th>
-                    <th>Rating</th>
-                    <th>Feedback</th>
+                    <th data-i18n="survey.satisfaction">Satisfaction</th>
+                    <th data-i18n="survey.rating">Rating</th>
+                    <th data-i18n="survey.feedback">Feedback</th>
                     <th>Date</th>
                   </tr>
                 </thead>
                 <tbody id="responses-table">
                   <tr>
                     <td colspan="5" style="text-align: center; padding: 3rem; color: var(--text-tertiary)">
-                      No survey responses yet. <a href="survey.html" style="color: var(--primary); font-weight: 600">Take your first survey →</a>
+                      <span data-i18n="dashboard.noResponses">No survey responses yet.</span> <a href="survey.html" style="color: var(--primary); font-weight: 600" data-i18n="dashboard.takeSurvey">Take your first survey →</a>
                     </td>
                   </tr>
                 </tbody>
@@ -109,24 +117,24 @@
 
           <!-- Profile Section -->
           <section id="profile-section" style="display: none">
-            <h2 style="margin-bottom: 2rem">Profile Settings</h2>
+            <h2 style="margin-bottom: 2rem" data-i18n="dashboard.profile">Profile Settings</h2>
             <div class="glass" style="padding: 2rem; border-radius: 16px">
               <div style="margin-bottom: 2rem">
-                <label style="color: var(--text-tertiary); font-weight: 400">Full Name</label>
+                <label style="color: var(--text-tertiary); font-weight: 400" data-i18n="dashboard.fullName">Full Name</label>
                 <p id="profile-name" style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0">-</p>
               </div>
 
               <div style="margin-bottom: 2rem">
-                <label style="color: var(--text-tertiary); font-weight: 400">Email</label>
+                <label style="color: var(--text-tertiary); font-weight: 400" data-i18n="dashboard.email">Email</label>
                 <p id="profile-email" style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0">-</p>
               </div>
 
               <div style="margin-bottom: 2rem">
-                <label style="color: var(--text-tertiary); font-weight: 400">Account Created</label>
+                <label style="color: var(--text-tertiary); font-weight: 400" data-i18n="dashboard.accountCreated">Account Created</label>
                 <p id="profile-date" style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0">-</p>
               </div>
 
-              <button class="btn btn-secondary" onclick="showSection('dashboard')">← Back to Dashboard</button>
+              <button class="btn btn-secondary" onclick="showSection('dashboard')" data-i18n="dashboard.back">← Back to Dashboard</button>
             </div>
           </section>
         </main>
@@ -137,7 +145,7 @@
   <!-- Footer -->
   <footer>
     <div class="footer-bottom">
-      <p>&copy; 2024 Sorovnoma. All rights reserved.</p>
+      <p data-i18n="home.footerCopyright">&copy; 2024 Sorovnoma. All rights reserved.</p>
     </div>
   </footer>
 
@@ -148,6 +156,8 @@
   <script>
     // Check authentication on page load
     document.addEventListener('DOMContentLoaded', () => {
+      updateLanguageButtons();
+
       if (!Auth.requireAuth()) {
         return;
       }
@@ -165,7 +175,7 @@
       document.querySelectorAll('.sidebar-item').forEach((item, index) => {
         if (index === 0) return; // Skip dashboard (already active)
         item.addEventListener('click', () => {
-          if (item.textContent.includes('Surveys')) {
+          if (item.textContent.includes('Surveys') || item.getAttribute('data-i18n') === 'dashboard.surveysNav') {
             window.location.href = 'survey.html';
           } else if (item.textContent.includes('Profile') || item.id === 'sidebar-profile') {
             showSection('profile');
@@ -176,12 +186,28 @@
       // Logout button
       document.getElementById('sidebar-logout').addEventListener('click', () => {
         AppState.clearUser();
-        Toast.success('Logged out successfully');
+        Toast.success(getTranslation('toast.loggedOut'));
         setTimeout(() => {
           window.location.href = 'index.html';
         }, 500);
       });
     });
+
+    function updateLanguageButtons() {
+      document.querySelectorAll('.lang-btn').forEach((btn) => {
+        btn.classList.remove('active');
+        if (btn.dataset.lang === currentLanguage) {
+          btn.classList.add('active');
+        }
+      });
+    }
+
+    // Override setLanguage to update buttons
+    const originalSetLanguage = window.setLanguage;
+    window.setLanguage = function (lang) {
+      originalSetLanguage(lang);
+      updateLanguageButtons();
+    };
 
     function loadDashboardStats() {
       const stats = AppState.getStats();
@@ -199,7 +225,7 @@
         tableBody.innerHTML = `
           <tr>
             <td colspan="5" style="text-align: center; padding: 3rem; color: var(--text-tertiary)">
-              No survey responses yet. <a href="survey.html" style="color: var(--primary); font-weight: 600">Take your first survey →</a>
+              ${getTranslation('dashboard.noResponses')} <a href="survey.html" style="color: var(--primary); font-weight: 600">${getTranslation('dashboard.takeSurvey')}</a>
             </td>
           </tr>
         `;

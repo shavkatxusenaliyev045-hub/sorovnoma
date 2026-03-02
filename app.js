@@ -1,7 +1,618 @@
 /* ====================================
    SURVEY APP - VANILLA JAVASCRIPT
-   Core Application Logic
+   Core Application Logic with i18n & User Management
    ==================================== */
+
+// ====================================
+// INTERNATIONALIZATION (i18n)
+// ====================================
+
+const i18n = {
+  en: {
+    // Navbar
+    navbar: {
+      brand: '🎯 Sorovnoma',
+      home: 'Home',
+      survey: 'Survey',
+      dashboard: 'Dashboard',
+      login: 'Login',
+      logout: 'Logout',
+    },
+    // Home page
+    home: {
+      heroTitle: 'Share Your Voice Through Surveys',
+      heroDescription: 'Join our premium survey platform to share your opinions, influence decisions, and earn rewards. Your feedback matters!',
+      startSurvey: '✨ Start Survey',
+      goDashboard: '📊 Go to Dashboard',
+      whyChoose: 'Why Choose Sorovnoma?',
+      secureTitle: 'Secure Access',
+      secureDesc: 'Your data is encrypted and protected with industry-standard security measures. We prioritize your privacy.',
+      fastTitle: 'Fast Responses',
+      fastDesc: 'Complete surveys in minutes. Our intuitive interface makes it quick and easy to share your feedback.',
+      resultsTitle: 'Real-Time Results',
+      resultsDesc: 'Track survey results instantly with live analytics. See insights as responses come in from participants.',
+      responsiveTitle: 'Fully Responsive',
+      responsiveDesc: 'Works seamlessly on all devices. Take surveys anywhere, anytime - desktop, tablet, or mobile.',
+      activeSurveys: 'Active Surveys',
+      surveyComplete: '% Complete',
+      startSurveyBtn: 'Start Survey →',
+      ready: 'Ready to Make an Impact?',
+      readyDesc: 'Join thousands of users who are already sharing their feedback and shaping the future of great products.',
+      getStarted: 'Get Started Now ✨',
+      footerCopyright: '© 2024 Sorovnoma. All rights reserved. Built with premium care.',
+    },
+    // Auth page
+    auth: {
+      login: 'Login',
+      signup: 'Sign Up',
+      welcomeBack: 'Welcome Back',
+      createAccount: 'Create Account',
+      email: 'Email Address',
+      emailPlaceholder: 'you@example.com',
+      password: 'Password',
+      passwordPlaceholder: '••••••••',
+      fullName: 'Full Name',
+      fullNamePlaceholder: 'John Doe',
+      confirmPassword: 'Confirm Password',
+      rememberMe: 'Remember me',
+      forgotPassword: 'Forgot password?',
+      createOne: 'Create one',
+      dontHaveAccount: "Don't have an account?",
+      alreadyHave: 'Already have an account?',
+      signIn: 'Sign In',
+      agreeTerms: 'I agree to the Terms of Service and Privacy Policy',
+      passwordWeak: 'Password is weak',
+      passwordFair: 'Password is fair - add numbers or symbols for stronger password',
+      passwordStrong: 'Password is strong',
+      passwordMin: 'At least 8 characters',
+      backToHome: 'Back to Home',
+      secure: '🔐 Secure',
+      fast: '🚀 Fast',
+      reliable: '📊 Reliable',
+    },
+    // Errors
+    errors: {
+      fullNameRequired: 'Full name is required',
+      emailInvalid: 'Please enter a valid email address',
+      passwordMin: 'Password must be at least 8 characters',
+      passwordMismatch: 'Passwords do not match',
+      emailExists: 'This email is already registered. Please login instead.',
+      userNotFound: 'User not found. Please check your email or sign up.',
+      passwordIncorrect: 'Incorrect password. Please try again.',
+      answerQuestion: 'Please answer this question before continuing',
+      agreeTerms: 'Please agree to the Terms of Service',
+    },
+    // Survey page
+    survey: {
+      title: 'Customer Feedback Survey',
+      intro: 'Your feedback is invaluable! Please take 3-5 minutes to answer these questions. Your honest responses help us improve our services.',
+      progress: 'Progress',
+      of: 'of',
+      back: '← Back',
+      next: 'Next →',
+      submit: '✓ Submit Survey',
+      anonymous: '💡 This survey is completely anonymous and will take about 3-5 minutes.',
+      q1: 'How satisfied are you with our service?',
+      q1Opt1: 'Very Satisfied',
+      q1Opt2: 'Satisfied',
+      q1Opt3: 'Neutral',
+      q1Opt4: 'Dissatisfied',
+      q2: 'Which features do you use most? (Select all that apply)',
+      q2Opt1: 'Data Analysis',
+      q2Opt2: 'Real-time Updates',
+      q2Opt3: 'Mobile App',
+      q2Opt4: 'Reporting',
+      q3: 'Rate your overall experience (1-5 stars)',
+      q4: 'What could we improve?',
+      q4Placeholder: 'Your feedback here...',
+      q5: 'How often do you use our service?',
+      q5Opt1: 'Daily',
+      q5Opt2: 'Weekly',
+      q5Opt3: 'Monthly',
+      q5Opt4: 'Occasionally',
+      satisfaction: 'Satisfaction',
+      features: 'Features',
+      rating: 'Rating',
+      feedback: 'Feedback',
+      frequency: 'Frequency',
+    },
+    // Dashboard page
+    dashboard: {
+      title: 'Your Dashboard',
+      subtitle: 'Track your survey responses and insights',
+      takeNewSurvey: '✨ Take New Survey',
+      overview: 'Overview',
+      totalResponses: 'Total Responses',
+      completedSurveys: 'Completed Surveys',
+      averageRating: 'Average Rating',
+      trends: 'Response Trends',
+      responsesOverTime: 'Responses Over Time (Demo Data)',
+      recentResponses: 'Recent Responses',
+      noResponses: 'No survey responses yet.',
+      takeSurvey: 'Take your first survey →',
+      profile: 'Profile Settings',
+      fullName: 'Full Name',
+      email: 'Email',
+      accountCreated: 'Account Created',
+      back: '← Back to Dashboard',
+      dashboardNav: '👤 Dashboard',
+      surveysNav: '📊 Surveys',
+      resultsNav: '📈 Results',
+      profileNav: '👤 Profile',
+      logoutNav: '🚪 Logout',
+    },
+    // Toast messages
+    toast: {
+      loggedIn: 'Logged in successfully! Redirecting...',
+      accountCreated: 'Account created successfully! Redirecting...',
+      loggedOut: 'Logged out successfully',
+      surveyCompleted: 'Survey submitted successfully!',
+    },
+  },
+
+  uz: {
+    // Navbar
+    navbar: {
+      brand: '🎯 Sorovnoma',
+      home: 'Asosiy',
+      survey: 'Anketa',
+      dashboard: 'Boshqaruv paneli',
+      login: 'Kirish',
+      logout: 'Chiqish',
+    },
+    // Home page
+    home: {
+      heroTitle: 'O\'z ovozingizni anketalar orqali eshiting',
+      heroDescription: 'Bizning premium anketa platformasiga qo\'shiling, o\'z fikringizni baham ko\'ring, qarorlarni ta\'sirchas qiling va mukofot oling. Sizning fikringiz muhim!',
+      startSurvey: '✨ Anketani boshlash',
+      goDashboard: '📊 Boshqaruv paneliga o\'tish',
+      whyChoose: 'Nega Sorovnomani tanlang?',
+      secureTitle: 'Xavfsiz kirish',
+      secureDesc: 'Sizning ma\'lumotlaringiz shifrlashtirilgan va sanoat standartlari bilan himoyalangan. Biz sizning maxfiylixingizni birinchi o\'ringa qo\'yamiz.',
+      fastTitle: 'Tez javoblar',
+      fastDesc: 'Anketalarni bir necha daqiqada yakunlang. Bizning intuitiv interfeysi fikringizni baham ko\'rishni oson qiladi.',
+      resultsTitle: 'Real vaqtda natijalar',
+      resultsDesc: 'Anketa natijalarini darhol kuzatib boring. Ishtirokchilardan javoblar kelib tushadigan sayin tushunchalarni ko\'ring.',
+      responsiveTitle: 'To\'liq responsive',
+      responsiveDesc: 'Barcha qurilmalarda muammosiz ishlaydi. Anketalarni istalgan vaqtda va joyda to\'ldiring - ish stoli, plansheti yoki mobil telefonda.',
+      activeSurveys: 'Faol anketalar',
+      surveyComplete: '% bajarildi',
+      startSurveyBtn: 'Anketani boshlash →',
+      ready: 'Ta\'sirchas qila olasizmi?',
+      readyDesc: 'O\'z fikringizni baham koradigan va ajoyib mahsulotlarning kelajagini shakllantriraydigan minglab foydalanuvchiga qo\'shiling.',
+      getStarted: 'Boshlashni boshlang ✨',
+      footerCopyright: '© 2024 Sorovnoma. Barcha huquqlar saqlanib qoladi. Premium ehtiyot bilan tuzilgan.',
+    },
+    // Auth page
+    auth: {
+      login: 'Kirish',
+      signup: 'Ro\'yxatdan o\'tish',
+      welcomeBack: 'Qaytib kelganingizdan xursand',
+      createAccount: 'Akkaunt yaratish',
+      email: 'Email manzili',
+      emailPlaceholder: 'siz@example.com',
+      password: 'Parol',
+      passwordPlaceholder: '••••••••',
+      fullName: 'To\'liq ismi',
+      fullNamePlaceholder: 'John Doe',
+      confirmPassword: 'Parolni tasdiqlash',
+      rememberMe: 'Meni eslab qol',
+      forgotPassword: 'Parolni unutdingizmi?',
+      createOne: 'Birini yaratish',
+      dontHaveAccount: 'Akkauntingiz yo\'qmi?',
+      alreadyHave: 'Allaqachon akkauntingiz bormi?',
+      signIn: 'Kirish',
+      agreeTerms: 'Men Xizmati shartlari va Maxfiylixlik siyosatiga roziман',
+      passwordWeak: 'Parol kuch yetarli emas',
+      passwordFair: 'Parol o\'rtacha - kuchli parol uchun raqamlar yoki belgilar qo\'shing',
+      passwordStrong: 'Parol kuch li',
+      passwordMin: 'Kamida 8 ta belgi',
+      backToHome: 'Asosiyga qaytish',
+      secure: '🔐 Xavfsiz',
+      fast: '🚀 Tez',
+      reliable: '📊 Ishonchli',
+    },
+    // Errors
+    errors: {
+      fullNameRequired: 'To\'liq ismi talab qilinadi',
+      emailInvalid: 'Iltimos, to\'g\'ri email manzilini kiriting',
+      passwordMin: 'Parol kamida 8 ta belgidan iborat bo\'lishi kerak',
+      passwordMismatch: 'Parollar mos kelmadi',
+      emailExists: 'Bu email allaqachon ro\'yxatdan o\'tgan. Iltimos, kirish uchun urinib ko\'ring.',
+      userNotFound: 'Foydalanuvchi topilmadi. Iltimos, email-ni tekshiring yoki ro\'yxatdan o\'ting.',
+      passwordIncorrect: 'Parol noto\'g\'ri. Iltimos, qayta urinib ko\'ring.',
+      answerQuestion: 'Iltimos, davom etishdan oldin bu savolga javob bering',
+      agreeTerms: 'Iltimos, Xizmati shartlari va Maxfiylixlik siyosatiga roziман bo\'ling',
+    },
+    // Survey page
+    survey: {
+      title: 'Mijoz fikri anketa',
+      intro: 'Sizning fikringiz dafoctir! Iltimos, bu savollarga javob berish uchun 3-5 daqiqa vaqt bering. Sizning qanday ki javoblaringiz bizga xizmatni yaxshilashga yordam beradi.',
+      progress: 'Taraqqiyot',
+      of: 'dan',
+      back: '← Orqaga',
+      next: 'Keyingi →',
+      submit: '✓ Anketani yuborish',
+      anonymous: '💡 Bu anketa to\'lik anonimdir va taxminan 3-5 daqiqa davom etadi.',
+      q1: 'Bizning xizmatdan qanchalik qoniqasiz?',
+      q1Opt1: 'Juda qoniqaman',
+      q1Opt2: 'Qoniqaman',
+      q1Opt3: 'Neytral',
+      q1Opt4: 'Qoniqmaman',
+      q2: 'Qaysi xususiyatlardan ko\'proq foydalanasiz? (Barcha tegishli narsalarni tanlang)',
+      q2Opt1: 'Ma\'lumot tahlili',
+      q2Opt2: 'Real vaqt yangiliklari',
+      q2Opt3: 'Mobile ilova',
+      q2Opt4: 'Hisobot',
+      q3: 'O\'zaro tajribangizni baholang (1-5 yulduz)',
+      q4: 'Nima yaxshilash mumkin?',
+      q4Placeholder: 'Sizning fikringiz bu yerda...',
+      q5: 'Bizning xizmatdan qanchalik tez-tez foydalanasiz?',
+      q5Opt1: 'Kundalik',
+      q5Opt2: 'Haftalik',
+      q5Opt3: 'Oylik',
+      q5Opt4: 'Ba\'zi vaqt',
+      satisfaction: 'Qoniqish',
+      features: 'Xususiyatlar',
+      rating: 'Reyting',
+      feedback: 'Fikri',
+      frequency: 'Chastota',
+    },
+    // Dashboard page
+    dashboard: {
+      title: 'Sizning boshqaruv panelingiz',
+      subtitle: 'Anketa javoblaringiz va tushunchalarini kuzatib boring',
+      takeNewSurvey: '✨ Yangi anketa to\'ldirish',
+      overview: 'Umumiy ko\'rinish',
+      totalResponses: 'Jami javoblar',
+      completedSurveys: 'Yakunlangan anketalar',
+      averageRating: 'O\'rtacha reyting',
+      trends: 'Javoblar tendensiyalari',
+      responsesOverTime: 'Vaqt bo\'yicha javoblar (Demo ma\'lumotlar)',
+      recentResponses: 'So\'nggi javoblar',
+      noResponses: 'Hali anketa javoblari yo\'q.',
+      takeSurvey: 'Birinchi anketangizni to\'ldiring →',
+      profile: 'Profil sozlamallari',
+      fullName: 'To\'liq ismi',
+      email: 'Email',
+      accountCreated: 'Akkaunt yaratildi',
+      back: '← Boshqaruv paneliga qaytish',
+      dashboardNav: '👤 Boshqaruv paneli',
+      surveysNav: '📊 Anketalar',
+      resultsNav: '📈 Natijalar',
+      profileNav: '👤 Profil',
+      logoutNav: '🚪 Chiqish',
+    },
+    // Toast messages
+    toast: {
+      loggedIn: 'Muvaffaqiyatli kirish! Yo\'naltirilmoqda...',
+      accountCreated: 'Muvaffaqiyatli akkaunt yaratildi! Yo\'naltirilmoqda...',
+      loggedOut: 'Muvaffaqiyatli chiqish',
+      surveyCompleted: 'Anketa muvaffaqiyatli yuborildi!',
+    },
+  },
+
+  ru: {
+    // Navbar
+    navbar: {
+      brand: '🎯 Sorovnoma',
+      home: 'Главная',
+      survey: 'Опрос',
+      dashboard: 'Панель управления',
+      login: 'Вход',
+      logout: 'Выход',
+    },
+    // Home page
+    home: {
+      heroTitle: 'Поделитесь своим мнением через опросы',
+      heroDescription: 'Присоединяйтесь к нашей премиум-платформе опросов, чтобы поделиться своим мнением, повлиять на решения и получать награды. Ваше мнение имеет значение!',
+      startSurvey: '✨ Начать опрос',
+      goDashboard: '📊 Перейти на панель',
+      whyChoose: 'Почему выбрать Sorovnoma?',
+      secureTitle: 'Безопасный доступ',
+      secureDesc: 'Ваши данные зашифрованы и защищены стандартами отрасли. Мы ставим вашу конфиденциальность на первое место.',
+      fastTitle: 'Быстрые ответы',
+      fastDesc: 'Заполните опросы за несколько минут. Наш интуитивный интерфейс облегчает обмен вашим мнением.',
+      resultsTitle: 'Результаты в реальном времени',
+      resultsDesc: 'Отслеживайте результаты опроса мгновенно с помощью прямой аналитики. Смотрите информацию по мере поступления ответов.',
+      responsiveTitle: 'Полная адаптивность',
+      responsiveDesc: 'Работает без проблем на всех устройствах. Заполняйте опросы в любое время и в любом месте - на настольном ПК, планшете или мобильном телефоне.',
+      activeSurveys: 'Активные опросы',
+      surveyComplete: '% завершено',
+      startSurveyBtn: 'Начать опрос →',
+      ready: 'Готовы оказать влияние?',
+      readyDesc: 'Присоединяйтесь к тысячам пользователей, которые уже делятся своим мнением и формируют будущее отличных продуктов.',
+      getStarted: 'Начните прямо сейчас ✨',
+      footerCopyright: '© 2024 Sorovnoma. Все права защищены. Создано с заботой.',
+    },
+    // Auth page
+    auth: {
+      login: 'Вход',
+      signup: 'Регистрация',
+      welcomeBack: 'Добро пожаловать!',
+      createAccount: 'Создать учетную запись',
+      email: 'Электронная почта',
+      emailPlaceholder: 'вы@example.com',
+      password: 'Пароль',
+      passwordPlaceholder: '••••••••',
+      fullName: 'Полное имя',
+      fullNamePlaceholder: 'Иван Петров',
+      confirmPassword: 'Подтвердить пароль',
+      rememberMe: 'Запомнить меня',
+      forgotPassword: 'Забыли пароль?',
+      createOne: 'Создать',
+      dontHaveAccount: 'Нет учетной записи?',
+      alreadyHave: 'Уже есть учетная запись?',
+      signIn: 'Вход',
+      agreeTerms: 'Я согласен с Условиями обслуживания и Политикой конфиденциальности',
+      passwordWeak: 'Пароль слабый',
+      passwordFair: 'Пароль среднего уровня - добавьте цифры или символы для более надежного пароля',
+      passwordStrong: 'Пароль надежный',
+      passwordMin: 'Не менее 8 символов',
+      backToHome: 'Вернуться на главную',
+      secure: '🔐 Безопасно',
+      fast: '🚀 Быстро',
+      reliable: '📊 Надежно',
+    },
+    // Errors
+    errors: {
+      fullNameRequired: 'Требуется полное имя',
+      emailInvalid: 'Пожалуйста, введите действительный адрес электронной почты',
+      passwordMin: 'Пароль должен содержать не менее 8 символов',
+      passwordMismatch: 'Пароли не совпадают',
+      emailExists: 'Эта электронная почта уже зарегистрирована. Пожалуйста, войдите.',
+      userNotFound: 'Пользователь не найден. Пожалуйста, проверьте свой адрес электронной почты или зарегистрируйтесь.',
+      passwordIncorrect: 'Неверный пароль. Пожалуйста, попробуйте снова.',
+      answerQuestion: 'Пожалуйста, ответьте на этот вопрос перед продолжением',
+      agreeTerms: 'Пожалуйста, согласитесь с Условиями обслуживания',
+    },
+    // Survey page
+    survey: {
+      title: 'Опрос о мнении клиента',
+      intro: 'Ваше мнение очень важно! Пожалуйста, ответьте на эти вопросы за 3-5 минут. Ваши честные ответы помогают нам улучшить наши услуги.',
+      progress: 'Прогресс',
+      of: 'из',
+      back: '← Назад',
+      next: 'Далее →',
+      submit: '✓ Отправить опрос',
+      anonymous: '💡 Этот опрос полностью анонимен и займет примерно 3-5 минут.',
+      q1: 'Насколько вы довольны нашим сервисом?',
+      q1Opt1: 'Очень доволен',
+      q1Opt2: 'Доволен',
+      q1Opt3: 'Нейтрально',
+      q1Opt4: 'Недоволен',
+      q2: 'Какие функции вы используете чаще всего? (Выберите все применяемые)',
+      q2Opt1: 'Анализ данных',
+      q2Opt2: 'Обновления в реальном времени',
+      q2Opt3: 'Мобильное приложение',
+      q2Opt4: 'Отчетность',
+      q3: 'Оцените ваш общий опыт (1-5 звезд)',
+      q4: 'Что можно улучшить?',
+      q4Placeholder: 'Ваше мнение здесь...',
+      q5: 'Как часто вы используете наш сервис?',
+      q5Opt1: 'Ежедневно',
+      q5Opt2: 'Еженедельно',
+      q5Opt3: 'Ежемесячно',
+      q5Opt4: 'Иногда',
+      satisfaction: 'Удовлетворение',
+      features: 'Функции',
+      rating: 'Оценка',
+      feedback: 'Отзыв',
+      frequency: 'Частота',
+    },
+    // Dashboard page
+    dashboard: {
+      title: 'Ваша панель управления',
+      subtitle: 'Отслеживайте ответы на опросы и аналитику',
+      takeNewSurvey: '✨ Пройти новый опрос',
+      overview: 'Обзор',
+      totalResponses: 'Всего ответов',
+      completedSurveys: 'Завершенных опросов',
+      averageRating: 'Средняя оценка',
+      trends: 'Тенденции ответов',
+      responsesOverTime: 'Ответы во времени (демо-данные)',
+      recentResponses: 'Последние ответы',
+      noResponses: 'Пока нет ответов на опросы.',
+      takeSurvey: 'Пройти первый опрос →',
+      profile: 'Параметры профиля',
+      fullName: 'Полное имя',
+      email: 'Электронная почта',
+      accountCreated: 'Аккаунт создан',
+      back: '← Вернуться на панель',
+      dashboardNav: '👤 Панель управления',
+      surveysNav: '📊 Опросы',
+      resultsNav: '📈 Результаты',
+      profileNav: '👤 Профиль',
+      logoutNav: '🚪 Выход',
+    },
+    // Toast messages
+    toast: {
+      loggedIn: 'Вход выполнен успешно! Перенаправление...',
+      accountCreated: 'Учетная запись создана успешно! Перенаправление...',
+      loggedOut: 'Выход выполнен успешно',
+      surveyCompleted: 'Опрос отправлен успешно!',
+    },
+  },
+};
+
+// ====================================
+// LANGUAGE MANAGEMENT
+// ====================================
+
+let currentLanguage = localStorage.getItem('lang') || 'en';
+
+function setLanguage(lang) {
+  if (i18n[lang]) {
+    currentLanguage = lang;
+    localStorage.setItem('lang', lang);
+    applyTranslations(lang);
+  }
+}
+
+function getTranslation(key) {
+  const keys = key.split('.');
+  let value = i18n[currentLanguage];
+
+  for (const k of keys) {
+    if (value && typeof value === 'object') {
+      value = value[k];
+    } else {
+      return key; // Fallback to key if not found
+    }
+  }
+
+  return value || key;
+}
+
+function applyTranslations(lang) {
+  // Fade out effect
+  document.querySelectorAll('[data-i18n], [data-i18n-placeholder]').forEach((el) => {
+    el.style.opacity = '0.7';
+  });
+
+  // Apply translations with slight delay for fade effect
+  setTimeout(() => {
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+      const key = el.getAttribute('data-i18n');
+      el.textContent = getTranslation(key);
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      el.placeholder = getTranslation(key);
+    });
+
+    document.querySelectorAll('[data-i18n-title]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-title');
+      el.title = getTranslation(key);
+    });
+
+    document.querySelectorAll('[data-i18n], [data-i18n-placeholder]').forEach((el) => {
+      el.style.opacity = '1';
+    });
+
+    // Update survey questions if on survey page
+    if (window.Survey && Survey.questions) {
+      updateSurveyQuestions();
+    }
+  }, 100);
+}
+
+function updateSurveyQuestions() {
+  Survey.questions = [
+    {
+      id: 'q1',
+      type: 'radio',
+      question: getTranslation('survey.q1'),
+      options: [
+        getTranslation('survey.q1Opt1'),
+        getTranslation('survey.q1Opt2'),
+        getTranslation('survey.q1Opt3'),
+        getTranslation('survey.q1Opt4'),
+      ],
+    },
+    {
+      id: 'q2',
+      type: 'checkbox',
+      question: getTranslation('survey.q2'),
+      options: [
+        getTranslation('survey.q2Opt1'),
+        getTranslation('survey.q2Opt2'),
+        getTranslation('survey.q2Opt3'),
+        getTranslation('survey.q2Opt4'),
+      ],
+    },
+    {
+      id: 'q3',
+      type: 'rating',
+      question: getTranslation('survey.q3'),
+    },
+    {
+      id: 'q4',
+      type: 'text',
+      question: getTranslation('survey.q4'),
+      placeholder: getTranslation('survey.q4Placeholder'),
+    },
+    {
+      id: 'q5',
+      type: 'dropdown',
+      question: getTranslation('survey.q5'),
+      options: [
+        getTranslation('survey.q5Opt1'),
+        getTranslation('survey.q5Opt2'),
+        getTranslation('survey.q5Opt3'),
+        getTranslation('survey.q5Opt4'),
+      ],
+    },
+  ];
+
+  // Re-render current step if on survey page
+  if (window.Survey && AppState !== undefined) {
+    Survey.renderStep();
+  }
+}
+
+// ====================================
+// USER DATABASE MANAGEMENT
+// ====================================
+
+const UserDB = {
+  // Get all users
+  getAllUsers() {
+    return JSON.parse(localStorage.getItem('users_db')) || [];
+  },
+
+  // Save users
+  saveUsers(users) {
+    localStorage.setItem('users_db', JSON.stringify(users));
+  },
+
+  // Find user by email
+  findByEmail(email) {
+    const users = this.getAllUsers();
+    return users.find((u) => u.email.toLowerCase() === email.toLowerCase());
+  },
+
+  // Check if email exists
+  emailExists(email) {
+    return this.findByEmail(email) !== undefined;
+  },
+
+  // Add new user
+  addUser(name, email, password) {
+    if (this.emailExists(email)) {
+      return { success: false, error: 'emailExists' };
+    }
+
+    const users = this.getAllUsers();
+    const newUser = {
+      id: Date.now().toString(),
+      name,
+      email,
+      password, // In production, this should be hashed
+      createdAt: new Date().toISOString(),
+    };
+
+    users.push(newUser);
+    this.saveUsers(users);
+    return { success: true, user: newUser };
+  },
+
+  // Verify login
+  verifyLogin(email, password) {
+    const user = this.findByEmail(email);
+
+    if (!user) {
+      return { success: false, error: 'userNotFound' };
+    }
+
+    if (user.password !== password) {
+      return { success: false, error: 'passwordIncorrect' };
+    }
+
+    return { success: true, user };
+  },
+};
 
 // ====================================
 // STATE MANAGEMENT & LOCALSTORAGE
@@ -18,12 +629,20 @@ const AppState = {
     this.currentUser = JSON.parse(localStorage.getItem('auth_user')) || null;
     this.surveyResponses = JSON.parse(localStorage.getItem('surveyResponses')) || [];
     this.returnUrl = sessionStorage.getItem('returnUrl') || null;
+
+    // Apply saved language
+    applyTranslations(currentLanguage);
   },
 
   // Save user to localStorage
   setUser(user) {
-    this.currentUser = user;
-    localStorage.setItem('auth_user', JSON.stringify(user));
+    this.currentUser = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      createdAt: user.createdAt,
+    };
+    localStorage.setItem('auth_user', JSON.stringify(this.currentUser));
   },
 
   // Clear user (logout)
@@ -99,14 +718,13 @@ const Auth = {
       return { success: false, errors };
     }
 
-    const user = {
-      name: fullName,
-      email: email,
-      createdAt: new Date().toISOString(),
-    };
+    const result = UserDB.addUser(fullName, email, password);
+    if (!result.success) {
+      return { success: false, errors: { email: getTranslation(`errors.${result.error}`) } };
+    }
 
-    AppState.setUser(user);
-    return { success: true, user };
+    AppState.setUser(result.user);
+    return { success: true, user: result.user };
   },
 
   // Sign in
@@ -116,16 +734,13 @@ const Auth = {
       return { success: false, errors };
     }
 
-    // For demo: any valid email/password combination works
-    // In production, this would validate against a backend
-    const user = {
-      name: email.split('@')[0], // Extract name from email
-      email: email,
-      createdAt: new Date().toISOString(),
-    };
+    const result = UserDB.verifyLogin(email, password);
+    if (!result.success) {
+      return { success: false, errors: { email: getTranslation(`errors.${result.error}`) } };
+    }
 
-    AppState.setUser(user);
-    return { success: true, user };
+    AppState.setUser(result.user);
+    return { success: true, user: result.user };
   },
 
   // Validate signup
@@ -133,15 +748,15 @@ const Auth = {
     const errors = {};
 
     if (!fullName.trim()) {
-      errors.fullName = 'Full name is required';
+      errors.fullName = getTranslation('errors.fullNameRequired');
     }
 
     if (!this.isValidEmail(email)) {
-      errors.email = 'Please enter a valid email address';
+      errors.email = getTranslation('errors.emailInvalid');
     }
 
     if (password.length < 8) {
-      errors.password = 'Password must be at least 8 characters';
+      errors.password = getTranslation('errors.passwordMin');
     }
 
     return errors;
@@ -152,11 +767,11 @@ const Auth = {
     const errors = {};
 
     if (!this.isValidEmail(email)) {
-      errors.email = 'Please enter a valid email address';
+      errors.email = getTranslation('errors.emailInvalid');
     }
 
     if (password.length < 8) {
-      errors.password = 'Password must be at least 8 characters';
+      errors.password = getTranslation('errors.passwordMin');
     }
 
     return errors;
@@ -548,7 +1163,7 @@ const Survey = {
   next() {
     const answer = this.getAnswer();
     if (!answer || (Array.isArray(answer) && answer.length === 0)) {
-      Toast.error('Please answer this question before continuing');
+      Toast.error(getTranslation('errors.answerQuestion'));
       return;
     }
 
@@ -572,7 +1187,7 @@ const Survey = {
   submit() {
     const answer = this.getAnswer();
     if (!answer || (Array.isArray(answer) && answer.length === 0)) {
-      Toast.error('Please answer this question before submitting');
+      Toast.error(getTranslation('errors.answerQuestion'));
       return;
     }
 
@@ -749,7 +1364,7 @@ function setupNavigation() {
     logoutLink.addEventListener('click', (e) => {
       e.preventDefault();
       AppState.clearUser();
-      Toast.success('Logged out successfully');
+      Toast.success(getTranslation('toast.loggedOut'));
       setTimeout(() => {
         window.location.href = 'index.html';
       }, 500);
@@ -770,19 +1385,19 @@ function updateNavbar() {
         <span class="nav-link" style="color: var(--primary); cursor: default;">
           ${AppState.currentUser.name}
         </span>
-        <button class="btn btn-primary btn-small" id="nav-logout">Logout</button>
+        <button class="btn btn-primary btn-small" id="nav-logout">${getTranslation('navbar.logout')}</button>
       `;
       document.getElementById('nav-logout')?.addEventListener('click', (e) => {
         e.preventDefault();
         AppState.clearUser();
-        Toast.success('Logged out successfully');
+        Toast.success(getTranslation('toast.loggedOut'));
         setTimeout(() => {
           window.location.href = 'index.html';
         }, 500);
       });
     } else {
       navAuthContainer.innerHTML = `
-        <button class="btn btn-secondary btn-small" id="nav-login">Login</button>
+        <button class="btn btn-secondary btn-small" id="nav-login">${getTranslation('navbar.login')}</button>
       `;
       document.getElementById('nav-login')?.addEventListener('click', (e) => {
         e.preventDefault();
@@ -800,3 +1415,7 @@ window.Modal = Modal;
 window.Toast = Toast;
 window.Chart = Chart;
 window.updateNavbar = updateNavbar;
+window.setLanguage = setLanguage;
+window.getTranslation = getTranslation;
+window.applyTranslations = applyTranslations;
+window.UserDB = UserDB;
