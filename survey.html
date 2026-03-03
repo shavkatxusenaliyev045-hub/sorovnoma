@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Take Survey - Sorovnoma</title>
+  <title>Survey - Sorovnoma</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -13,11 +13,9 @@
       <div class="nav-logo">🎯 Sorovnoma</div>
       <ul class="nav-links">
         <li class="nav-link" id="nav-home" data-i18n="navbar.home">Home</li>
-        <li class="nav-link active" id="nav-survey" data-i18n="navbar.survey">Survey</li>
-        <li class="nav-link" id="nav-dashboard" data-i18n="navbar.dashboard">Dashboard</li>
+        <li class="nav-link active" id="nav-dashboard" data-i18n="navbar.dashboard">Dashboard</li>
       </ul>
       <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap">
-        <!-- Language Switcher -->
         <div class="language-switcher">
           <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">EN</button>
           <button class="lang-btn" data-lang="uz" onclick="setLanguage('uz')">UZ</button>
@@ -31,71 +29,174 @@
   <!-- Main Content -->
   <main class="page">
     <div class="container">
-      <!-- Survey Header -->
-      <div style="text-align: center; margin-bottom: 3rem">
-        <h1 data-i18n="survey.title">Customer Feedback Survey</h1>
-        <p style="max-width: 600px; margin: 0 auto" data-i18n="survey.intro">
-          Your feedback is invaluable! Please take 3-5 minutes to answer these questions. Your honest
-          responses help us improve our services.
-        </p>
-      </div>
-
-      <!-- Progress Bar -->
-      <div style="max-width: 700px; margin: 0 auto; margin-bottom: 3rem">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem">
-          <span style="font-weight: 600; color: var(--text-primary)" data-i18n="survey.progress">Progress</span>
-          <span id="progress-text" style="font-size: 0.9rem; color: var(--text-secondary)">1 of 5</span>
+      <!-- Lobby View (Host & Participant) -->
+      <div id="lobby-view" style="display: none">
+        <div style="text-align: center; margin-bottom: 3rem">
+          <h1 id="survey-title" style="margin-bottom: 1rem"></h1>
+          <p id="survey-description" style="max-width: 600px; margin: 0 auto; color: var(--text-secondary)"></p>
         </div>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width: 20%"></div>
+
+        <div style="max-width: 600px; margin: 0 auto">
+          <!-- Host Lobby -->
+          <div id="host-lobby" style="display: none">
+            <div class="glass" style="padding: 3rem; border-radius: 24px">
+              <div style="text-align: center; margin-bottom: 2rem">
+                <div style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem">📋</div>
+                <h2 data-i18n="survey.waitingParticipants">Waiting for participants...</h2>
+              </div>
+
+              <div style="background: rgba(99, 102, 241, 0.1); padding: 1.5rem; border-radius: 16px; margin-bottom: 2rem">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem">
+                  <span data-i18n="survey.inviteLink">Invite Link</span>
+                  <button class="btn btn-primary btn-small" onclick="copyInviteLink()">
+                    📋 <span data-i18n="survey.copyLink">Copy Link</span>
+                  </button>
+                </div>
+                <input
+                  type="text"
+                  id="invite-link"
+                  readonly
+                  style="width: 100%; padding: 0.75rem; background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 8px; color: var(--text-secondary); font-size: 0.85rem"
+                />
+              </div>
+
+              <div style="margin-bottom: 2rem">
+                <h3 style="margin-bottom: 1rem" data-i18n="survey.participants">Participants</h3>
+                <div id="participants-list" style="background: rgba(30, 41, 59, 0.5); padding: 1.5rem; border-radius: 12px; min-height: 100px">
+                  <p style="color: var(--text-tertiary); text-align: center" data-i18n="survey.waitingParticipants">
+                    Waiting for participants...
+                  </p>
+                </div>
+                <p style="text-align: center; color: var(--primary); font-weight: 600; margin-top: 1rem">
+                  <span id="participant-count">0</span> <span data-i18n="survey.participantsJoined">Participants joined</span>
+                </p>
+              </div>
+
+              <button
+                class="btn btn-primary"
+                id="start-survey-btn"
+                onclick="startSurvey()"
+                style="width: 100%; font-size: 1.1rem; padding: 1rem"
+                disabled
+              >
+                <span data-i18n="survey.startSurvey">Start Survey</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Participant Lobby -->
+          <div id="participant-lobby" style="display: none">
+            <div class="glass" style="padding: 3rem; border-radius: 24px; text-align: center">
+              <div style="font-size: 3rem; margin-bottom: 1rem; animation: pulse 2s infinite">⏳</div>
+              <h2 data-i18n="survey.lobby">Waiting for survey to start...</h2>
+              <p style="color: var(--text-secondary); margin: 1rem 0" data-i18n="survey.surveyLive">Survey is live!</p>
+              <p style="color: var(--text-tertiary); font-size: 0.9rem" id="participant-status">
+                Host has not started the survey yet. Please wait...
+              </p>
+              <button class="btn btn-secondary btn-small" onclick="checkSurveyStatus()" style="margin-top: 1.5rem">
+                🔄 Refresh
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Stepper -->
-      <div style="max-width: 700px; margin: 0 auto; margin-bottom: 3rem">
-        <div class="stepper">
-          <div class="step active">
-            <div class="step-number">1</div>
-            <div class="step-label" data-i18n="survey.satisfaction">Satisfaction</div>
+      <!-- Survey Taking View -->
+      <div id="survey-view" style="display: none">
+        <div style="text-align: center; margin-bottom: 3rem">
+          <h1 id="survey-title-taking" style="margin-bottom: 1rem"></h1>
+        </div>
+
+        <div style="max-width: 700px; margin: 0 auto; margin-bottom: 3rem">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem">
+            <span style="font-weight: 600; color: var(--text-primary)" data-i18n="survey.progress">Progress</span>
+            <span id="progress-text" style="font-size: 0.9rem; color: var(--text-secondary)">1 of 5</span>
           </div>
-          <div class="step">
-            <div class="step-number">2</div>
-            <div class="step-label" data-i18n="survey.features">Features</div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 20%"></div>
           </div>
-          <div class="step">
-            <div class="step-number">3</div>
-            <div class="step-label" data-i18n="survey.rating">Rating</div>
-          </div>
-          <div class="step">
-            <div class="step-number">4</div>
-            <div class="step-label" data-i18n="survey.feedback">Feedback</div>
-          </div>
-          <div class="step">
-            <div class="step-number">5</div>
-            <div class="step-label" data-i18n="survey.frequency">Frequency</div>
-          </div>
+        </div>
+
+        <div style="max-width: 700px; margin: 0 auto; margin-bottom: 3rem">
+          <div class="stepper" id="stepper"></div>
+        </div>
+
+        <div id="survey-container" class="survey-container"></div>
+
+        <div class="survey-controls" style="max-width: 700px; margin: 0 auto">
+          <button id="btn-back" class="btn btn-secondary" onclick="Survey.back()" style="display: none" data-i18n="survey.back">
+            ← Back
+          </button>
+          <button id="btn-next" class="btn btn-primary" onclick="Survey.next()" data-i18n="survey.next">
+            Next →
+          </button>
+          <button
+            id="btn-submit"
+            class="btn btn-primary"
+            onclick="submitSurveyResponse()"
+            style="display: none; background: linear-gradient(135deg, var(--success) 0%, #059669 100%)"
+            data-i18n="survey.submit"
+          >
+            ✓ Submit Survey
+          </button>
         </div>
       </div>
 
-      <!-- Survey Container -->
-      <div id="survey-container" class="survey-container"></div>
+      <!-- Results View -->
+      <div id="results-view" style="display: none">
+        <div style="text-align: center; margin-bottom: 3rem">
+          <h1 id="results-title" style="margin-bottom: 1rem"></h1>
+          <p style="color: var(--text-secondary)"><span data-i18n="survey.viewResults">View Results</span></p>
+        </div>
 
-      <!-- Survey Controls -->
-      <div class="survey-controls" style="max-width: 700px; margin: 0 auto">
-        <button id="btn-back" class="btn btn-secondary" onclick="Survey.back()" style="display: none" data-i18n="survey.back">
-          ← Back
-        </button>
-        <button id="btn-next" class="btn btn-primary" onclick="Survey.next()" data-i18n="survey.next">
-          Next →
-        </button>
-        <button id="btn-submit" class="btn btn-primary" onclick="Survey.submit()" style="display: none; background: linear-gradient(135deg, var(--success) 0%, #059669 100%)" data-i18n="survey.submit">
-          ✓ Submit Survey
-        </button>
-      </div>
+        <!-- Host Results -->
+        <div id="host-results" style="display: none">
+          <div style="max-width: 1000px; margin: 0 auto">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem">
+              <div class="stat-card">
+                <div class="stat-value" id="total-participants">0</div>
+                <div class="stat-label" data-i18n="dashboard.totalParticipants">Total Participants</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value" id="total-submissions">0</div>
+                <div class="stat-label" data-i18n="dashboard.totalSubmissions">Total Submissions</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value" id="avg-rating">0</div>
+                <div class="stat-label" data-i18n="dashboard.avgRating">Average Rating</div>
+              </div>
+            </div>
 
-      <!-- Survey Info -->
-      <div style="max-width: 700px; margin: 0 auto; margin-top: 3rem; text-align: center; color: var(--text-tertiary); font-size: 0.9rem">
-        <p data-i18n="survey.anonymous">💡 This survey is completely anonymous and will take about 3-5 minutes.</p>
+            <div class="table-container">
+              <h2 style="margin-bottom: 1.5rem" data-i18n="survey.submissions">Submissions</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th data-i18n="dashboard.fullName">Name</th>
+                    <th data-i18n="survey.submitted">Submitted</th>
+                    <th data-i18n="survey.rating">Rating</th>
+                  </tr>
+                </thead>
+                <tbody id="submissions-table"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Participant Results -->
+        <div id="participant-results" style="display: none">
+          <div style="max-width: 600px; margin: 0 auto">
+            <div class="glass" style="padding: 3rem; border-radius: 24px; text-align: center">
+              <div style="font-size: 3rem; margin-bottom: 1rem">✨</div>
+              <h2 style="margin-bottom: 1rem" data-i18n="survey.myResults">My Results</h2>
+              <div id="participant-result-content"></div>
+              <button class="btn btn-primary" onclick="window.location.href='dashboard.html'" style="width: 100%; margin-top: 1.5rem">
+                📊 Back to Dashboard
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
@@ -112,30 +213,33 @@
 
   <script src="app.js"></script>
   <script>
+    let currentSurvey = null;
+    let currentRole = null; // 'host', 'participant', or 'results'
+    let surveyId = null;
+    let statusPollingInterval = null;
+
     document.addEventListener('DOMContentLoaded', () => {
+      if (!Auth.requireAuth()) return;
+
       updateLanguageButtons();
-      
-      if (!Auth.requireAuth()) {
-        return;
+      applyTranslations(currentLanguage);
+
+      // Parse URL params
+      const params = new URLSearchParams(window.location.search);
+
+      if (params.has('host')) {
+        surveyId = params.get('host');
+        currentRole = 'host';
+        loadSurvey(surveyId, 'host');
+      } else if (params.has('join')) {
+        surveyId = params.get('join');
+        currentRole = 'participant';
+        loadSurvey(surveyId, 'participant');
+      } else if (params.has('results')) {
+        surveyId = params.get('results');
+        currentRole = 'results';
+        loadSurvey(surveyId, 'results');
       }
-
-      // Initialize survey with translated questions
-      updateSurveyQuestions();
-      Survey.init();
-
-      // Update progress text on survey step change
-      function updateProgressText() {
-        document.getElementById('progress-text').textContent = `${AppState.currentStep + 1} ${getTranslation('survey.of')} ${Survey.questions.length}`;
-      }
-
-      // Monkey patch Survey.renderStep to update progress text
-      const originalRenderStep = Survey.renderStep.bind(Survey);
-      Survey.renderStep = function () {
-        originalRenderStep();
-        updateProgressText();
-      };
-
-      updateProgressText();
     });
 
     function updateLanguageButtons() {
@@ -147,12 +251,244 @@
       });
     }
 
-    // Override setLanguage to update buttons
     const originalSetLanguage = window.setLanguage;
     window.setLanguage = function (lang) {
       originalSetLanguage(lang);
       updateLanguageButtons();
     };
+
+    function loadSurvey(surveyId, role) {
+      currentSurvey = SurveyDB.getSurveyById(surveyId);
+
+      if (!currentSurvey) {
+        Toast.error(getTranslation('errors.surveyNotFound'));
+        setTimeout(() => (window.location.href = 'dashboard.html'), 2000);
+        return;
+      }
+
+      // Set survey titles
+      document.getElementById('survey-title').textContent = currentSurvey.title;
+      document.getElementById('survey-description').textContent = currentSurvey.description;
+      document.getElementById('survey-title-taking').textContent = currentSurvey.title;
+      document.getElementById('results-title').textContent = currentSurvey.title;
+
+      if (role === 'host') {
+        showHostLobby();
+      } else if (role === 'participant') {
+        addParticipantToSurvey();
+        showParticipantLobby();
+        startStatusPolling();
+      } else if (role === 'results') {
+        showResults();
+      }
+    }
+
+    function showHostLobby() {
+      document.getElementById('lobby-view').style.display = 'block';
+      document.getElementById('host-lobby').style.display = 'block';
+      document.getElementById('participant-lobby').style.display = 'none';
+
+      // Generate invite link
+      const inviteLink = `${window.location.origin}${window.location.pathname}?join=${currentSurvey.id}`;
+      document.getElementById('invite-link').value = inviteLink;
+
+      // Update participants list
+      updateParticipantsList();
+
+      // Update button state
+      const startBtn = document.getElementById('start-survey-btn');
+      startBtn.disabled = currentSurvey.participants.length === 0;
+
+      // Polling to update participants count
+      setInterval(() => {
+        currentSurvey = SurveyDB.getSurveyById(surveyId);
+        updateParticipantsList();
+        startBtn.disabled = currentSurvey.participants.length === 0;
+      }, 2000);
+    }
+
+    function showParticipantLobby() {
+      document.getElementById('lobby-view').style.display = 'block';
+      document.getElementById('host-lobby').style.display = 'none';
+      document.getElementById('participant-lobby').style.display = 'block';
+    }
+
+    function updateParticipantsList() {
+      const list = document.getElementById('participants-list');
+      const count = document.getElementById('participant-count');
+
+      count.textContent = currentSurvey.participants.length;
+
+      if (currentSurvey.participants.length === 0) {
+        list.innerHTML = `<p style="color: var(--text-tertiary); text-align: center">${getTranslation('survey.waitingParticipants')}</p>`;
+      } else {
+        list.innerHTML = currentSurvey.participants
+          .map((p) => `<div style="padding: 0.75rem; background: rgba(99, 102, 241, 0.1); border-radius: 8px; margin-bottom: 0.5rem">👤 ${p.name}</div>`)
+          .join('');
+      }
+    }
+
+    function addParticipantToSurvey() {
+      SurveyDB.addParticipant(surveyId, AppState.currentUser.email, AppState.currentUser.name);
+    }
+
+    function startStatusPolling() {
+      statusPollingInterval = setInterval(() => {
+        checkSurveyStatus();
+      }, 2000);
+    }
+
+    function checkSurveyStatus() {
+      currentSurvey = SurveyDB.getSurveyById(surveyId);
+
+      if (currentSurvey && currentSurvey.status === 'live') {
+        clearInterval(statusPollingInterval);
+        showSurveyView();
+      }
+    }
+
+    function startSurvey() {
+      SurveyDB.updateSurveyStatus(surveyId, 'live');
+      showSurveyView();
+    }
+
+    function showSurveyView() {
+      document.getElementById('lobby-view').style.display = 'none';
+      document.getElementById('survey-view').style.display = 'block';
+
+      // Setup survey questions from created survey
+      Survey.questions = currentSurvey.questions.map((q) => ({
+        id: q.id,
+        type: q.type,
+        question: q.text,
+        options: q.options || [],
+      }));
+
+      // Create stepper
+      const stepperDiv = document.getElementById('stepper');
+      stepperDiv.innerHTML = Survey.questions
+        .map(
+          (q, index) => `
+        <div class="step ${index === 0 ? 'active' : ''}">
+          <div class="step-number">${index + 1}</div>
+          <div class="step-label">${index + 1}</div>
+        </div>
+      `
+        )
+        .join('');
+
+      AppState.currentStep = 0;
+      Survey.renderStep();
+
+      function updateProgressText() {
+        document.getElementById('progress-text').textContent = `${AppState.currentStep + 1} ${getTranslation('survey.of')} ${Survey.questions.length}`;
+      }
+
+      const originalRenderStep = Survey.renderStep.bind(Survey);
+      Survey.renderStep = function () {
+        originalRenderStep();
+        updateProgressText();
+      };
+
+      updateProgressText();
+    }
+
+    function submitSurveyResponse() {
+      const answer = Survey.getAnswer();
+      if (!answer || (Array.isArray(answer) && answer.length === 0)) {
+        Toast.error(getTranslation('errors.answerQuestion'));
+        return;
+      }
+
+      const responses = {};
+      let ratingValue = null;
+
+      Survey.questions.forEach((q) => {
+        const input = document.querySelector(`input[name="${q.id}"], select[name="${q.id}"], textarea[name="${q.id}"]`);
+        if (input) {
+          if (q.type === 'checkbox') {
+            responses[q.id] = Array.from(document.querySelectorAll(`input[name="${q.id}"]:checked`)).map((el) => el.value);
+          } else if (q.type === 'rating') {
+            const activeStar = document.querySelector('.star.active');
+            responses[q.id] = activeStar ? activeStar.dataset.value : null;
+            ratingValue = activeStar ? activeStar.dataset.value : null;
+          } else {
+            responses[q.id] = input.value;
+          }
+        }
+      });
+
+      SubmissionDB.addSubmission(surveyId, AppState.currentUser.email, AppState.currentUser.name, responses, ratingValue);
+
+      Toast.success(getTranslation('toast.surveyCompleted'));
+      showParticipantResults();
+    }
+
+    function showResults() {
+      document.getElementById('results-view').style.display = 'block';
+
+      // Check if current user is host or participant
+      if (currentSurvey.hostEmail === AppState.currentUser.email) {
+        showHostResults();
+      } else {
+        showParticipantResults();
+      }
+    }
+
+    function showHostResults() {
+      document.getElementById('host-results').style.display = 'block';
+      document.getElementById('participant-results').style.display = 'none';
+
+      const submissions = SubmissionDB.getSubmissionsBySurvey(surveyId);
+      const stats = SubmissionDB.getStats(surveyId);
+
+      document.getElementById('total-participants').textContent = currentSurvey.participants.length;
+      document.getElementById('total-submissions').textContent = stats.totalSubmissions;
+      document.getElementById('avg-rating').textContent = `${stats.averageRating} ⭐`;
+
+      const table = document.getElementById('submissions-table');
+      if (submissions.length === 0) {
+        table.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 2rem; color: var(--text-tertiary)">${getTranslation('survey.noSubmissions')}</td></tr>`;
+      } else {
+        table.innerHTML = submissions
+          .map(
+            (sub, index) => `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${sub.participantName}</td>
+            <td>${new Date(sub.createdAt).toLocaleDateString()}</td>
+            <td>${sub.ratingValue ? `${sub.ratingValue} ⭐` : 'N/A'}</td>
+          </tr>
+        `
+          )
+          .join('');
+      }
+    }
+
+    function showParticipantResults() {
+      document.getElementById('host-results').style.display = 'none';
+      document.getElementById('participant-results').style.display = 'block';
+
+      const submission = SubmissionDB.getSubmissionByParticipant(surveyId, AppState.currentUser.email);
+
+      let content = '<p style="color: var(--text-secondary); margin: 1.5rem 0">Thank you for completing the survey!</p>';
+
+      if (submission && submission.ratingValue) {
+        content += `<div style="background: rgba(99, 102, 241, 0.1); padding: 1.5rem; border-radius: 12px; margin: 1.5rem 0">
+          <p style="color: var(--text-tertiary); margin-bottom: 0.5rem">${getTranslation('survey.rating')}</p>
+          <p style="font-size: 2rem; color: var(--primary); margin: 0">${submission.ratingValue} ⭐</p>
+        </div>`;
+      }
+
+      document.getElementById('participant-result-content').innerHTML = content;
+    }
+
+    function copyInviteLink() {
+      const link = document.getElementById('invite-link').value;
+      navigator.clipboard.writeText(link).then(() => {
+        Toast.success(getTranslation('toast.linkCopied'));
+      });
+    }
   </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 /* ====================================
-   SURVEY APP - VANILLA JAVASCRIPT
-   Core Application Logic with i18n & User Management
+   SOROVNOMA - Survey Platform
+   Vanilla JS with i18n, Auth, & Survey Management
    ==================================== */
 
 // ====================================
@@ -9,7 +9,6 @@
 
 const i18n = {
   en: {
-    // Navbar
     navbar: {
       brand: '🎯 Sorovnoma',
       home: 'Home',
@@ -18,30 +17,28 @@ const i18n = {
       login: 'Login',
       logout: 'Logout',
     },
-    // Home page
     home: {
-      heroTitle: 'Share Your Voice Through Surveys',
-      heroDescription: 'Join our premium survey platform to share your opinions, influence decisions, and earn rewards. Your feedback matters!',
-      startSurvey: '✨ Start Survey',
+      heroTitle: 'Create & Share Surveys Instantly',
+      heroDescription: 'Build surveys, share invite links, gather responses in real-time. Perfect for educators, researchers, and teams.',
+      startSurvey: '✨ Create Survey',
       goDashboard: '📊 Go to Dashboard',
       whyChoose: 'Why Choose Sorovnoma?',
       secureTitle: 'Secure Access',
       secureDesc: 'Your data is encrypted and protected with industry-standard security measures. We prioritize your privacy.',
       fastTitle: 'Fast Responses',
-      fastDesc: 'Complete surveys in minutes. Our intuitive interface makes it quick and easy to share your feedback.',
+      fastDesc: 'Create surveys in minutes. Share with a simple link and gather responses instantly.',
       resultsTitle: 'Real-Time Results',
-      resultsDesc: 'Track survey results instantly with live analytics. See insights as responses come in from participants.',
+      resultsDesc: 'Track responses instantly with live analytics. See insights as participants respond.',
       responsiveTitle: 'Fully Responsive',
-      responsiveDesc: 'Works seamlessly on all devices. Take surveys anywhere, anytime - desktop, tablet, or mobile.',
+      responsiveDesc: 'Works seamlessly on all devices. Create and take surveys anywhere, anytime.',
       activeSurveys: 'Active Surveys',
       surveyComplete: '% Complete',
       startSurveyBtn: 'Start Survey →',
-      ready: 'Ready to Make an Impact?',
-      readyDesc: 'Join thousands of users who are already sharing their feedback and shaping the future of great products.',
-      getStarted: 'Get Started Now ✨',
+      ready: 'Ready to Get Started?',
+      readyDesc: 'Create your first survey today and start gathering insights from your audience.',
+      getStarted: 'Create Your First Survey ✨',
       footerCopyright: '© 2024 Sorovnoma. All rights reserved. Built with premium care.',
     },
-    // Auth page
     auth: {
       login: 'Login',
       signup: 'Sign Up',
@@ -70,7 +67,6 @@ const i18n = {
       fast: '🚀 Fast',
       reliable: '📊 Reliable',
     },
-    // Errors
     errors: {
       fullNameRequired: 'Full name is required',
       emailInvalid: 'Please enter a valid email address',
@@ -81,17 +77,19 @@ const i18n = {
       passwordIncorrect: 'Incorrect password. Please try again.',
       answerQuestion: 'Please answer this question before continuing',
       agreeTerms: 'Please agree to the Terms of Service',
+      surveyNotFound: 'Survey not found. Please check the invite link.',
+      surveyTitle: 'Survey title is required',
+      atLeastOneQuestion: 'Add at least one question to your survey',
     },
-    // Survey page
     survey: {
-      title: 'Customer Feedback Survey',
-      intro: 'Your feedback is invaluable! Please take 3-5 minutes to answer these questions. Your honest responses help us improve our services.',
+      title: 'Survey',
+      intro: 'Thank you for participating! Please answer all questions.',
       progress: 'Progress',
       of: 'of',
       back: '← Back',
       next: 'Next →',
       submit: '✓ Submit Survey',
-      anonymous: '💡 This survey is completely anonymous and will take about 3-5 minutes.',
+      anonymous: '💡 Your responses are valuable. Thank you!',
       q1: 'How satisfied are you with our service?',
       q1Opt1: 'Very Satisfied',
       q1Opt2: 'Satisfied',
@@ -115,139 +113,190 @@ const i18n = {
       rating: 'Rating',
       feedback: 'Feedback',
       frequency: 'Frequency',
+      lobby: 'Waiting for survey to start...',
+      waitingParticipants: 'Waiting for participants...',
+      participants: 'Participants',
+      participantsJoined: 'Participants joined',
+      startSurvey: 'Start Survey',
+      surveyLive: 'Survey is live!',
+      inviteLink: 'Invite Link',
+      copyLink: 'Copy Link',
+      linkCopied: 'Link copied to clipboard!',
+      myResults: 'My Results',
+      viewResults: 'View Results',
+      submissions: 'Submissions',
+      noSubmissions: 'No submissions yet',
+      submitted: 'Submitted',
+      averageRating: 'Average Rating',
     },
-    // Dashboard page
     dashboard: {
       title: 'Your Dashboard',
-      subtitle: 'Track your survey responses and insights',
-      takeNewSurvey: '✨ Take New Survey',
-      overview: 'Overview',
-      totalResponses: 'Total Responses',
-      completedSurveys: 'Completed Surveys',
-      averageRating: 'Average Rating',
-      trends: 'Response Trends',
-      responsesOverTime: 'Responses Over Time (Demo Data)',
-      recentResponses: 'Recent Responses',
-      noResponses: 'No survey responses yet.',
-      takeSurvey: 'Take your first survey →',
+      subtitle: 'Manage your surveys and results',
+      createSurvey: '✨ Create New Survey',
+      mySurveys: 'My Surveys',
+      noSurveys: 'No surveys created yet. Create your first survey!',
+      surveyTitle: 'Survey Title',
+      surveyDescription: 'Description',
+      questions: 'Questions',
+      participants: 'Participants',
+      status: 'Status',
+      actions: 'Actions',
+      openLobby: 'Open Lobby',
+      viewResults: 'View Results',
+      delete: 'Delete',
+      edit: 'Edit',
+      draft: 'Draft',
+      lobby: 'Lobby',
+      live: 'Live',
+      closed: 'Closed',
       profile: 'Profile Settings',
       fullName: 'Full Name',
       email: 'Email',
       accountCreated: 'Account Created',
-      back: '← Back to Dashboard',
+      back: '← Back',
       dashboardNav: '👤 Dashboard',
       surveysNav: '📊 Surveys',
       resultsNav: '📈 Results',
       profileNav: '👤 Profile',
       logoutNav: '🚪 Logout',
+      createSurveyModal: 'Create New Survey',
+      surveyTitleLabel: 'Survey Title',
+      surveyDescLabel: 'Description (optional)',
+      addQuestion: '+ Add Question',
+      questionText: 'Question',
+      questionType: 'Type',
+      removeQuestion: 'Remove',
+      create: 'Create Survey',
+      cancel: 'Cancel',
+      multipleChoice: 'Multiple Choice',
+      checkboxes: 'Checkboxes',
+      rating: 'Rating (1-5)',
+      shortText: 'Short Text',
+      dropdown: 'Dropdown',
+      totalSubmissions: 'Total Submissions',
+      totalParticipants: 'Total Participants',
+      avgRating: 'Average Rating',
     },
-    // Toast messages
     toast: {
       loggedIn: 'Logged in successfully! Redirecting...',
       accountCreated: 'Account created successfully! Redirecting...',
       loggedOut: 'Logged out successfully',
       surveyCompleted: 'Survey submitted successfully!',
+      surveyCreated: 'Survey created successfully!',
+      linkCopied: 'Invite link copied to clipboard!',
     },
   },
-
   uz: {
-    // Navbar
     navbar: {
       brand: '🎯 Sorovnoma',
       home: 'Asosiy',
       survey: 'Anketa',
-      dashboard: 'Boshqaruv paneli',
+      dashboard: 'Boshqaruv',
       login: 'Kirish',
       logout: 'Chiqish',
     },
-    // Home page
     home: {
-      heroTitle: 'O\'z ovozingizni anketalar orqali eshiting',
-      heroDescription: 'Bizning premium anketa platformasiga qo\'shiling, o\'z fikringizni baham ko\'ring, qarorlarni ta\'sirchas qiling va mukofot oling. Sizning fikringiz muhim!',
-      startSurvey: '✨ Anketani boshlash',
-      goDashboard: '📊 Boshqaruv paneliga o\'tish',
-      whyChoose: 'Nega Sorovnomani tanlang?',
-      secureTitle: 'Xavfsiz kirish',
-      secureDesc: 'Sizning ma\'lumotlaringiz shifrlashtirilgan va sanoat standartlari bilan himoyalangan. Biz sizning maxfiylixingizni birinchi o\'ringa qo\'yamiz.',
-      fastTitle: 'Tez javoblar',
-      fastDesc: 'Anketalarni bir necha daqiqada yakunlang. Bizning intuitiv interfeysi fikringizni baham ko\'rishni oson qiladi.',
-      resultsTitle: 'Real vaqtda natijalar',
-      resultsDesc: 'Anketa natijalarini darhol kuzatib boring. Ishtirokchilardan javoblar kelib tushadigan sayin tushunchalarni ko\'ring.',
-      responsiveTitle: 'To\'liq responsive',
-      responsiveDesc: 'Barcha qurilmalarda muammosiz ishlaydi. Anketalarni istalgan vaqtda va joyda to\'ldiring - ish stoli, plansheti yoki mobil telefonda.',
-      activeSurveys: 'Faol anketalar',
+      heroTitle: 'Foydalanuvchi Anketa Yaratish Platformasi',
+      heroDescription: 'Anketalarni yaratın, taklifnomalar ulashing, real vaqtda javoblarni to\'pling. O\'qituvchilar, tadqiqotchilar va jamalar uchun ideal.',
+      startSurvey: '✨ Anketa Yaratish',
+      goDashboard: '📊 Boshqaruvga O\'tish',
+      whyChoose: 'Nega Sorovnomani Tanlang?',
+      secureTitle: 'Xavfsiz Kirish',
+      secureDesc: 'Sizning ma\'lumotlaringiz shifrlangan va himoyalangan.',
+      fastTitle: 'Tez Javoblar',
+      fastDesc: 'Anketalarni daqiqalarda yarating. Oddiy havola bilan baham korishni boshlang.',
+      resultsTitle: 'Real Vaqtda Natijalar',
+      resultsDesc: 'Javoblarni foydalanuvchilar yo\'llagan sayin kuzatib boring.',
+      responsiveTitle: 'To\'liq Responsive',
+      responsiveDesc: 'Barcha qurilmalarda ishlaydi.',
+      activeSurveys: 'Faol Anketalar',
       surveyComplete: '% bajarildi',
-      startSurveyBtn: 'Anketani boshlash →',
-      ready: 'Ta\'sirchas qila olasizmi?',
-      readyDesc: 'O\'z fikringizni baham koradigan va ajoyib mahsulotlarning kelajagini shakllantriraydigan minglab foydalanuvchiga qo\'shiling.',
-      getStarted: 'Boshlashni boshlang ✨',
-      footerCopyright: '© 2024 Sorovnoma. Barcha huquqlar saqlanib qoladi. Premium ehtiyot bilan tuzilgan.',
+      startSurveyBtn: 'Anketani Boshlash →',
+      ready: 'Boshlashga Tayyormi?',
+      readyDesc: 'Bugun birinchi anketangizni yarating va ma\'lumot to\'plashni boshlang.',
+      getStarted: 'Birinchi Anketangizni Yarating ✨',
+      footerCopyright: '© 2024 Sorovnoma. Barcha huquqlar saqlanib qoladi.',
     },
-    // Auth page
     auth: {
       login: 'Kirish',
-      signup: 'Ro\'yxatdan o\'tish',
-      welcomeBack: 'Qaytib kelganingizdan xursand',
-      createAccount: 'Akkaunt yaratish',
-      email: 'Email manzili',
+      signup: 'Ro\'yxatdan O\'tish',
+      welcomeBack: 'Qaytib Kelganingizdan Xursand',
+      createAccount: 'Akkaunt Yaratish',
+      email: 'Email Manzili',
       emailPlaceholder: 'siz@example.com',
       password: 'Parol',
       passwordPlaceholder: '••••••••',
-      fullName: 'To\'liq ismi',
-      fullNamePlaceholder: 'John Doe',
-      confirmPassword: 'Parolni tasdiqlash',
-      rememberMe: 'Meni eslab qol',
-      forgotPassword: 'Parolni unutdingizmi?',
-      createOne: 'Birini yaratish',
-      dontHaveAccount: 'Akkauntingiz yo\'qmi?',
-      alreadyHave: 'Allaqachon akkauntingiz bormi?',
+      fullName: 'To\'liq Ismi',
+      fullNamePlaceholder: 'Ism Familya',
+      confirmPassword: 'Parolni Tasdiqlash',
+      rememberMe: 'Meni Eslab Qol',
+      forgotPassword: 'Parolni Unutdingizmi?',
+      createOne: 'Yaratish',
+      dontHaveAccount: 'Akkauntingiz Yo\'qmi?',
+      alreadyHave: 'Allaqachon Akkauntingiz Bormi?',
       signIn: 'Kirish',
-      agreeTerms: 'Men Xizmati shartlari va Maxfiylixlik siyosatiga roziман',
-      passwordWeak: 'Parol kuch yetarli emas',
-      passwordFair: 'Parol o\'rtacha - kuchli parol uchun raqamlar yoki belgilar qo\'shing',
-      passwordStrong: 'Parol kuch li',
-      passwordMin: 'Kamida 8 ta belgi',
-      backToHome: 'Asosiyga qaytish',
+      agreeTerms: 'Men Shartlarga Roziман',
+      passwordWeak: 'Parol Kuch Yetarli Emas',
+      passwordFair: 'Parol O\'rtacha',
+      passwordStrong: 'Parol Kuchli',
+      passwordMin: 'Kamida 8 Ta Belgi',
+      backToHome: 'Asosiyga Qaytish',
       secure: '🔐 Xavfsiz',
       fast: '🚀 Tez',
       reliable: '📊 Ishonchli',
     },
-    // Errors
     errors: {
       fullNameRequired: 'To\'liq ismi talab qilinadi',
-      emailInvalid: 'Iltimos, to\'g\'ri email manzilini kiriting',
-      passwordMin: 'Parol kamida 8 ta belgidan iborat bo\'lishi kerak',
+      emailInvalid: 'To\'g\'ri email kiriting',
+      passwordMin: 'Parol 8 ta belgidan iborat bo\'lishi kerak',
       passwordMismatch: 'Parollar mos kelmadi',
-      emailExists: 'Bu email allaqachon ro\'yxatdan o\'tgan. Iltimos, kirish uchun urinib ko\'ring.',
-      userNotFound: 'Foydalanuvchi topilmadi. Iltimos, email-ni tekshiring yoki ro\'yxatdan o\'ting.',
-      passwordIncorrect: 'Parol noto\'g\'ri. Iltimos, qayta urinib ko\'ring.',
-      answerQuestion: 'Iltimos, davom etishdan oldin bu savolga javob bering',
-      agreeTerms: 'Iltimos, Xizmati shartlari va Maxfiylixlik siyosatiga roziман bo\'ling',
+      emailExists: 'Bu email allaqachon ro\'yxatdan o\'tgan',
+      userNotFound: 'Foydalanuvchi topilmadi',
+      passwordIncorrect: 'Parol noto\'g\'ri',
+      answerQuestion: 'Savolga javob bering',
+      agreeTerms: 'Shartlarga roziман bo\'ling',
+      surveyNotFound: 'Anketa topilmadi',
+      surveyTitle: 'Anketa sarlavhasini kiriting',
+      atLeastOneQuestion: 'Kamida bir savol qo\'shing',
     },
-    // Survey page
     survey: {
-      title: 'Mijoz fikri anketa',
-      intro: 'Sizning fikringiz dafoctir! Iltimos, bu savollarga javob berish uchun 3-5 daqiqa vaqt bering. Sizning qanday ki javoblaringiz bizga xizmatni yaxshilashga yordam beradi.',
+      title: 'Anketa',
+      intro: 'Javob berishingiz uchun rahmat!',
       progress: 'Taraqqiyot',
       of: 'dan',
       back: '← Orqaga',
       next: 'Keyingi →',
-      submit: '✓ Anketani yuborish',
-      anonymous: '💡 Bu anketa to\'lik anonimdir va taxminan 3-5 daqiqa davom etadi.',
-      q1: 'Bizning xizmatdan qanchalik qoniqasiz?',
+      submit: '✓ Anketani Yuborish',
+      anonymous: '💡 Sizning javoblaringiz qimmatli!',
+      participants: 'Ishtirokchilar',
+      participantsJoined: 'Ishtirokchilar Qo\'shildi',
+      startSurvey: 'Anketani Boshlash',
+      lobby: 'Anketaning boshlashini kutmoqda...',
+      waitingParticipants: 'Ishtirokchilarning qo\'shilishini kutmoqda...',
+      surveyLive: 'Anketa Faol!',
+      inviteLink: 'Taklifnoma Havolasi',
+      copyLink: 'Havolani Nusxalash',
+      linkCopied: 'Havolasiga nusxa ko\'chirildi!',
+      myResults: 'Mening Natijalarim',
+      viewResults: 'Natijalarni Ko\'rish',
+      submissions: 'Topshirilmalar',
+      noSubmissions: 'Hali topshirilmalar yo\'q',
+      submitted: 'Topshirilgan',
+      averageRating: 'O\'rtacha Reyting',
+      q1: 'Hizmatdan qanchalik qoniqasiz?',
       q1Opt1: 'Juda qoniqaman',
       q1Opt2: 'Qoniqaman',
       q1Opt3: 'Neytral',
       q1Opt4: 'Qoniqmaman',
-      q2: 'Qaysi xususiyatlardan ko\'proq foydalanasiz? (Barcha tegishli narsalarni tanlang)',
-      q2Opt1: 'Ma\'lumot tahlili',
-      q2Opt2: 'Real vaqt yangiliklari',
-      q2Opt3: 'Mobile ilova',
+      q2: 'Qaysi xususiyatlardan ko\'proq foydalanasiz?',
+      q2Opt1: 'Ma\'lumot Tahlili',
+      q2Opt2: 'Real Vaqt Yangiliklari',
+      q2Opt3: 'Mobile Ilova',
       q2Opt4: 'Hisobot',
       q3: 'O\'zaro tajribangizni baholang (1-5 yulduz)',
       q4: 'Nima yaxshilash mumkin?',
-      q4Placeholder: 'Sizning fikringiz bu yerda...',
-      q5: 'Bizning xizmatdan qanchalik tez-tez foydalanasiz?',
+      q4Placeholder: 'Sizning fikringiz...',
+      q5: 'Qanchalik tez-tez foydalanasiz?',
       q5Opt1: 'Kundalik',
       q5Opt2: 'Haftalik',
       q5Opt3: 'Oylik',
@@ -258,74 +307,94 @@ const i18n = {
       feedback: 'Fikri',
       frequency: 'Chastota',
     },
-    // Dashboard page
     dashboard: {
-      title: 'Sizning boshqaruv panelingiz',
-      subtitle: 'Anketa javoblaringiz va tushunchalarini kuzatib boring',
-      takeNewSurvey: '✨ Yangi anketa to\'ldirish',
-      overview: 'Umumiy ko\'rinish',
-      totalResponses: 'Jami javoblar',
-      completedSurveys: 'Yakunlangan anketalar',
-      averageRating: 'O\'rtacha reyting',
-      trends: 'Javoblar tendensiyalari',
-      responsesOverTime: 'Vaqt bo\'yicha javoblar (Demo ma\'lumotlar)',
-      recentResponses: 'So\'nggi javoblar',
-      noResponses: 'Hali anketa javoblari yo\'q.',
-      takeSurvey: 'Birinchi anketangizni to\'ldiring →',
-      profile: 'Profil sozlamallari',
-      fullName: 'To\'liq ismi',
+      title: 'Sizning Boshqaruv Panelingiz',
+      subtitle: 'Anketalaringizni va natijalaringizni boshqaring',
+      createSurvey: '✨ Yangi Anketa Yaratish',
+      mySurveys: 'Mening Anketalarim',
+      noSurveys: 'Hali anketa yaratilmagani. Birinchi anketangizni yarating!',
+      surveyTitle: 'Anketa Sarlavhasi',
+      surveyDescription: 'Tavsifi',
+      questions: 'Savollar',
+      participants: 'Ishtirokchilar',
+      status: 'Holati',
+      actions: 'Harakatlar',
+      openLobby: 'Lobbyni Ochish',
+      viewResults: 'Natijalarni Ko\'rish',
+      delete: 'O\'chirish',
+      edit: 'Tahrir',
+      draft: 'Loyiha',
+      lobby: 'Lobby',
+      live: 'Faol',
+      closed: 'Yopilgan',
+      profile: 'Profil Sozlamalari',
+      fullName: 'To\'liq Ismi',
       email: 'Email',
-      accountCreated: 'Akkaunt yaratildi',
-      back: '← Boshqaruv paneliga qaytish',
-      dashboardNav: '👤 Boshqaruv paneli',
+      accountCreated: 'Akkaunt Yaratilgan',
+      back: '← Orqaga',
+      dashboardNav: '👤 Boshqaruv',
       surveysNav: '📊 Anketalar',
       resultsNav: '📈 Natijalar',
       profileNav: '👤 Profil',
       logoutNav: '🚪 Chiqish',
+      createSurveyModal: 'Yangi Anketa Yaratish',
+      surveyTitleLabel: 'Anketa Sarlavhasi',
+      surveyDescLabel: 'Tavsifi (ixtiyoriy)',
+      addQuestion: '+ Savol Qo\'shing',
+      questionText: 'Savol',
+      questionType: 'Turi',
+      removeQuestion: 'O\'chirish',
+      create: 'Anketa Yaratish',
+      cancel: 'Bekor Qilish',
+      multipleChoice: 'Bir Javob',
+      checkboxes: 'Ko\'p Javob',
+      rating: 'Reyting (1-5)',
+      shortText: 'Qisqa Matn',
+      dropdown: 'Pastki Menyu',
+      totalSubmissions: 'Jami Topshirilmalar',
+      totalParticipants: 'Jami Ishtirokchilar',
+      avgRating: 'O\'rtacha Reyting',
     },
-    // Toast messages
     toast: {
       loggedIn: 'Muvaffaqiyatli kirish! Yo\'naltirilmoqda...',
-      accountCreated: 'Muvaffaqiyatli akkaunt yaratildi! Yo\'naltirilmoqda...',
+      accountCreated: 'Akkaunt yaratildi! Yo\'naltirilmoqda...',
       loggedOut: 'Muvaffaqiyatli chiqish',
       surveyCompleted: 'Anketa muvaffaqiyatli yuborildi!',
+      surveyCreated: 'Anketa muvaffaqiyatli yaratildi!',
+      linkCopied: 'Havolasiga nusxa ko\'chirildi!',
     },
   },
-
   ru: {
-    // Navbar
     navbar: {
       brand: '🎯 Sorovnoma',
       home: 'Главная',
       survey: 'Опрос',
-      dashboard: 'Панель управления',
+      dashboard: 'Панель',
       login: 'Вход',
       logout: 'Выход',
     },
-    // Home page
     home: {
-      heroTitle: 'Поделитесь своим мнением через опросы',
-      heroDescription: 'Присоединяйтесь к нашей премиум-платформе опросов, чтобы поделиться своим мнением, повлиять на решения и получать награды. Ваше мнение имеет значение!',
-      startSurvey: '✨ Начать опрос',
+      heroTitle: 'Создавайте и делитесь опросами мгновенно',
+      heroDescription: 'Создавайте опросы, делитесь ссылками приглашения, собирайте ответы в реальном времени. Идеально для преподавателей, исследователей и команд.',
+      startSurvey: '✨ Создать опрос',
       goDashboard: '📊 Перейти на панель',
       whyChoose: 'Почему выбрать Sorovnoma?',
       secureTitle: 'Безопасный доступ',
-      secureDesc: 'Ваши данные зашифрованы и защищены стандартами отрасли. Мы ставим вашу конфиденциальность на первое место.',
+      secureDesc: 'Ваши данные зашифрованы и защищены.',
       fastTitle: 'Быстрые ответы',
-      fastDesc: 'Заполните опросы за несколько минут. Наш интуитивный интерфейс облегчает обмен вашим мнением.',
+      fastDesc: 'Создавайте опросы за считанные минуты.',
       resultsTitle: 'Результаты в реальном времени',
-      resultsDesc: 'Отслеживайте результаты опроса мгновенно с помощью прямой аналитики. Смотрите информацию по мере поступления ответов.',
+      resultsDesc: 'Отслеживайте ответы по мере их поступления.',
       responsiveTitle: 'Полная адаптивность',
-      responsiveDesc: 'Работает без проблем на всех устройствах. Заполняйте опросы в любое время и в любом месте - на настольном ПК, планшете или мобильном телефоне.',
+      responsiveDesc: 'Работает на всех устройствах.',
       activeSurveys: 'Активные опросы',
       surveyComplete: '% завершено',
       startSurveyBtn: 'Начать опрос →',
-      ready: 'Готовы оказать влияние?',
-      readyDesc: 'Присоединяйтесь к тысячам пользователей, которые уже делятся своим мнением и формируют будущее отличных продуктов.',
-      getStarted: 'Начните прямо сейчас ✨',
-      footerCopyright: '© 2024 Sorovnoma. Все права защищены. Создано с заботой.',
+      ready: 'Готовы начать?',
+      readyDesc: 'Создайте свой первый опрос сегодня и начните собирать данные.',
+      getStarted: 'Создайте свой первый опрос ✨',
+      footerCopyright: '© 2024 Sorovnoma. Все права защищены.',
     },
-    // Auth page
     auth: {
       login: 'Вход',
       signup: 'Регистрация',
@@ -344,9 +413,9 @@ const i18n = {
       dontHaveAccount: 'Нет учетной записи?',
       alreadyHave: 'Уже есть учетная запись?',
       signIn: 'Вход',
-      agreeTerms: 'Я согласен с Условиями обслуживания и Политикой конфиденциальности',
+      agreeTerms: 'Я согласен с условиями',
       passwordWeak: 'Пароль слабый',
-      passwordFair: 'Пароль среднего уровня - добавьте цифры или символы для более надежного пароля',
+      passwordFair: 'Пароль среднего уровня',
       passwordStrong: 'Пароль надежный',
       passwordMin: 'Не менее 8 символов',
       backToHome: 'Вернуться на главную',
@@ -354,42 +423,58 @@ const i18n = {
       fast: '🚀 Быстро',
       reliable: '📊 Надежно',
     },
-    // Errors
     errors: {
       fullNameRequired: 'Требуется полное имя',
-      emailInvalid: 'Пожалуйста, введите действительный адрес электронной почты',
-      passwordMin: 'Пароль должен содержать не менее 8 символов',
+      emailInvalid: 'Введите действительный адрес электронной почты',
+      passwordMin: 'Пароль должен быть не менее 8 символов',
       passwordMismatch: 'Пароли не совпадают',
-      emailExists: 'Эта электронная почта уже зарегистрирована. Пожалуйста, войдите.',
-      userNotFound: 'Пользователь не найден. Пожалуйста, проверьте свой адрес электронной почты или зарегистрируйтесь.',
-      passwordIncorrect: 'Неверный пароль. Пожалуйста, попробуйте снова.',
-      answerQuestion: 'Пожалуйста, ответьте на этот вопрос перед продолжением',
-      agreeTerms: 'Пожалуйста, согласитесь с Условиями обслуживания',
+      emailExists: 'Эта электронная почта уже зарегистрирована',
+      userNotFound: 'Пользователь не найден',
+      passwordIncorrect: 'Неверный пароль',
+      answerQuestion: 'Ответьте на вопрос',
+      agreeTerms: 'Согласитесь с условиями',
+      surveyNotFound: 'Опрос не найден',
+      surveyTitle: 'Введите название опроса',
+      atLeastOneQuestion: 'Добавьте хотя бы один вопрос',
     },
-    // Survey page
     survey: {
-      title: 'Опрос о мнении клиента',
-      intro: 'Ваше мнение очень важно! Пожалуйста, ответьте на эти вопросы за 3-5 минут. Ваши честные ответы помогают нам улучшить наши услуги.',
+      title: 'Опрос',
+      intro: 'Спасибо за участие!',
       progress: 'Прогресс',
       of: 'из',
       back: '← Назад',
       next: 'Далее →',
       submit: '✓ Отправить опрос',
-      anonymous: '💡 Этот опрос полностью анонимен и займет примерно 3-5 минут.',
-      q1: 'Насколько вы довольны нашим сервисом?',
+      anonymous: '💡 Ваши ответы ценны!',
+      participants: 'Участники',
+      participantsJoined: 'Присоединились участники',
+      startSurvey: 'Начать опрос',
+      lobby: 'Ожидание начала опроса...',
+      waitingParticipants: 'Ожидание участников...',
+      surveyLive: 'Опрос открыт!',
+      inviteLink: 'Ссылка приглашения',
+      copyLink: 'Копировать ссылку',
+      linkCopied: 'Ссылка скопирована!',
+      myResults: 'Мои результаты',
+      viewResults: 'Просмотреть результаты',
+      submissions: 'Ответы',
+      noSubmissions: 'Нет ответов',
+      submitted: 'Отправлено',
+      averageRating: 'Средняя оценка',
+      q1: 'Насколько вы довольны?',
       q1Opt1: 'Очень доволен',
       q1Opt2: 'Доволен',
       q1Opt3: 'Нейтрально',
       q1Opt4: 'Недоволен',
-      q2: 'Какие функции вы используете чаще всего? (Выберите все применяемые)',
+      q2: 'Какие функции вы используете больше всего?',
       q2Opt1: 'Анализ данных',
       q2Opt2: 'Обновления в реальном времени',
       q2Opt3: 'Мобильное приложение',
       q2Opt4: 'Отчетность',
-      q3: 'Оцените ваш общий опыт (1-5 звезд)',
+      q3: 'Оцените ваш опыт (1-5 звезд)',
       q4: 'Что можно улучшить?',
-      q4Placeholder: 'Ваше мнение здесь...',
-      q5: 'Как часто вы используете наш сервис?',
+      q4Placeholder: 'Ваш ответ здесь...',
+      q5: 'Как часто вы используете?',
       q5Opt1: 'Ежедневно',
       q5Opt2: 'Еженедельно',
       q5Opt3: 'Ежемесячно',
@@ -400,37 +485,61 @@ const i18n = {
       feedback: 'Отзыв',
       frequency: 'Частота',
     },
-    // Dashboard page
     dashboard: {
       title: 'Ваша панель управления',
-      subtitle: 'Отслеживайте ответы на опросы и аналитику',
-      takeNewSurvey: '✨ Пройти новый опрос',
-      overview: 'Обзор',
-      totalResponses: 'Всего ответов',
-      completedSurveys: 'Завершенных опросов',
-      averageRating: 'Средняя оценка',
-      trends: 'Тенденции ответов',
-      responsesOverTime: 'Ответы во времени (демо-данные)',
-      recentResponses: 'Последние ответы',
-      noResponses: 'Пока нет ответов на опросы.',
-      takeSurvey: 'Пройти первый опрос →',
+      subtitle: 'Управляйте вашими опросами и результатами',
+      createSurvey: '✨ Создать новый опрос',
+      mySurveys: 'Мои опросы',
+      noSurveys: 'Вы еще не создали ни одного опроса. Создайте свой первый!',
+      surveyTitle: 'Название опроса',
+      surveyDescription: 'Описание',
+      questions: 'Вопросы',
+      participants: 'Участники',
+      status: 'Статус',
+      actions: 'Действия',
+      openLobby: 'Открыть лобби',
+      viewResults: 'Просмотреть результаты',
+      delete: 'Удалить',
+      edit: 'Редактировать',
+      draft: 'Черновик',
+      lobby: 'Лобби',
+      live: 'Активный',
+      closed: 'Завершен',
       profile: 'Параметры профиля',
       fullName: 'Полное имя',
       email: 'Электронная почта',
       accountCreated: 'Аккаунт создан',
-      back: '← Вернуться на панель',
-      dashboardNav: '👤 Панель управления',
+      back: '← Назад',
+      dashboardNav: '👤 Панель',
       surveysNav: '📊 Опросы',
       resultsNav: '📈 Результаты',
       profileNav: '👤 Профиль',
       logoutNav: '🚪 Выход',
+      createSurveyModal: 'Создать новый опрос',
+      surveyTitleLabel: 'Название опроса',
+      surveyDescLabel: 'Описание (необязательно)',
+      addQuestion: '+ Добавить вопрос',
+      questionText: 'Вопрос',
+      questionType: 'Тип',
+      removeQuestion: 'Удалить',
+      create: 'Создать опрос',
+      cancel: 'Отмена',
+      multipleChoice: 'Один выбор',
+      checkboxes: 'Несколько выборов',
+      rating: 'Оценка (1-5)',
+      shortText: 'Короткий текст',
+      dropdown: 'Выпадающее меню',
+      totalSubmissions: 'Всего ответов',
+      totalParticipants: 'Всего участников',
+      avgRating: 'Средняя оценка',
     },
-    // Toast messages
     toast: {
       loggedIn: 'Вход выполнен успешно! Перенаправление...',
-      accountCreated: 'Учетная запись создана успешно! Перенаправление...',
+      accountCreated: 'Учетная запись создана! Перенаправление...',
       loggedOut: 'Выход выполнен успешно',
       surveyCompleted: 'Опрос отправлен успешно!',
+      surveyCreated: 'Опрос создан успешно!',
+      linkCopied: 'Ссылка скопирована!',
     },
   },
 };
@@ -457,7 +566,7 @@ function getTranslation(key) {
     if (value && typeof value === 'object') {
       value = value[k];
     } else {
-      return key; // Fallback to key if not found
+      return key;
     }
   }
 
@@ -465,12 +574,10 @@ function getTranslation(key) {
 }
 
 function applyTranslations(lang) {
-  // Fade out effect
   document.querySelectorAll('[data-i18n], [data-i18n-placeholder]').forEach((el) => {
     el.style.opacity = '0.7';
   });
 
-  // Apply translations with slight delay for fade effect
   setTimeout(() => {
     document.querySelectorAll('[data-i18n]').forEach((el) => {
       const key = el.getAttribute('data-i18n');
@@ -491,7 +598,6 @@ function applyTranslations(lang) {
       el.style.opacity = '1';
     });
 
-    // Update survey questions if on survey page
     if (window.Survey && Survey.questions) {
       updateSurveyQuestions();
     }
@@ -546,7 +652,6 @@ function updateSurveyQuestions() {
     },
   ];
 
-  // Re-render current step if on survey page
   if (window.Survey && AppState !== undefined) {
     Survey.renderStep();
   }
@@ -557,28 +662,23 @@ function updateSurveyQuestions() {
 // ====================================
 
 const UserDB = {
-  // Get all users
   getAllUsers() {
     return JSON.parse(localStorage.getItem('users_db')) || [];
   },
 
-  // Save users
   saveUsers(users) {
     localStorage.setItem('users_db', JSON.stringify(users));
   },
 
-  // Find user by email
   findByEmail(email) {
     const users = this.getAllUsers();
     return users.find((u) => u.email.toLowerCase() === email.toLowerCase());
   },
 
-  // Check if email exists
   emailExists(email) {
     return this.findByEmail(email) !== undefined;
   },
 
-  // Add new user
   addUser(name, email, password) {
     if (this.emailExists(email)) {
       return { success: false, error: 'emailExists' };
@@ -589,7 +689,7 @@ const UserDB = {
       id: Date.now().toString(),
       name,
       email,
-      password, // In production, this should be hashed
+      password,
       createdAt: new Date().toISOString(),
     };
 
@@ -598,7 +698,6 @@ const UserDB = {
     return { success: true, user: newUser };
   },
 
-  // Verify login
   verifyLogin(email, password) {
     const user = this.findByEmail(email);
 
@@ -615,7 +714,138 @@ const UserDB = {
 };
 
 // ====================================
-// STATE MANAGEMENT & LOCALSTORAGE
+// SURVEY DATABASE MANAGEMENT
+// ====================================
+
+const SurveyDB = {
+  getAllSurveys() {
+    return JSON.parse(localStorage.getItem('surveys_db')) || [];
+  },
+
+  saveSurveys(surveys) {
+    localStorage.setItem('surveys_db', JSON.stringify(surveys));
+  },
+
+  createSurvey(hostEmail, hostName, title, description, questions) {
+    const surveys = this.getAllSurveys();
+    const survey = {
+      id: 'survey_' + Date.now(),
+      hostEmail,
+      hostName,
+      title,
+      description,
+      questions,
+      status: 'draft',
+      participants: [],
+      createdAt: new Date().toISOString(),
+    };
+
+    surveys.push(survey);
+    this.saveSurveys(surveys);
+    return survey;
+  },
+
+  getSurveyById(surveyId) {
+    const surveys = this.getAllSurveys();
+    return surveys.find((s) => s.id === surveyId);
+  },
+
+  getSurveysByHost(hostEmail) {
+    const surveys = this.getAllSurveys();
+    return surveys.filter((s) => s.hostEmail === hostEmail);
+  },
+
+  addParticipant(surveyId, participantEmail, participantName) {
+    const surveys = this.getAllSurveys();
+    const survey = surveys.find((s) => s.id === surveyId);
+
+    if (survey) {
+      const exists = survey.participants.some((p) => p.email === participantEmail);
+      if (!exists) {
+        survey.participants.push({
+          email: participantEmail,
+          name: participantName,
+          joinedAt: new Date().toISOString(),
+        });
+        this.saveSurveys(surveys);
+      }
+    }
+
+    return survey;
+  },
+
+  updateSurveyStatus(surveyId, status) {
+    const surveys = this.getAllSurveys();
+    const survey = surveys.find((s) => s.id === surveyId);
+
+    if (survey) {
+      survey.status = status;
+      this.saveSurveys(surveys);
+    }
+
+    return survey;
+  },
+
+  deleteSurvey(surveyId) {
+    const surveys = this.getAllSurveys().filter((s) => s.id !== surveyId);
+    this.saveSurveys(surveys);
+  },
+};
+
+// ====================================
+// SUBMISSION DATABASE MANAGEMENT
+// ====================================
+
+const SubmissionDB = {
+  getAllSubmissions() {
+    return JSON.parse(localStorage.getItem('submissions_db')) || [];
+  },
+
+  saveSubmissions(submissions) {
+    localStorage.setItem('submissions_db', JSON.stringify(submissions));
+  },
+
+  addSubmission(surveyId, participantEmail, participantName, answers, ratingValue) {
+    const submissions = this.getAllSubmissions();
+    const submission = {
+      id: 'sub_' + Date.now(),
+      surveyId,
+      participantEmail,
+      participantName,
+      answers,
+      ratingValue,
+      createdAt: new Date().toISOString(),
+    };
+
+    submissions.push(submission);
+    this.saveSubmissions(submissions);
+    return submission;
+  },
+
+  getSubmissionsBySurvey(surveyId) {
+    const submissions = this.getAllSubmissions();
+    return submissions.filter((s) => s.surveyId === surveyId);
+  },
+
+  getSubmissionByParticipant(surveyId, participantEmail) {
+    const submissions = this.getAllSubmissions();
+    return submissions.find((s) => s.surveyId === surveyId && s.participantEmail === participantEmail);
+  },
+
+  getStats(surveyId) {
+    const submissions = this.getSubmissionsBySurvey(surveyId);
+    const ratings = submissions.filter((s) => s.ratingValue).map((s) => parseInt(s.ratingValue));
+    const avgRating = ratings.length > 0 ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1) : 0;
+
+    return {
+      totalSubmissions: submissions.length,
+      averageRating: avgRating,
+    };
+  },
+};
+
+// ====================================
+// APP STATE MANAGEMENT
 // ====================================
 
 const AppState = {
@@ -624,17 +854,13 @@ const AppState = {
   currentStep: 0,
   surveyResponses: [],
 
-  // Initialize app state from localStorage
   init() {
     this.currentUser = JSON.parse(localStorage.getItem('auth_user')) || null;
     this.surveyResponses = JSON.parse(localStorage.getItem('surveyResponses')) || [];
     this.returnUrl = sessionStorage.getItem('returnUrl') || null;
-
-    // Apply saved language
     applyTranslations(currentLanguage);
   },
 
-  // Save user to localStorage
   setUser(user) {
     this.currentUser = {
       id: user.id,
@@ -645,13 +871,11 @@ const AppState = {
     localStorage.setItem('auth_user', JSON.stringify(this.currentUser));
   },
 
-  // Clear user (logout)
   clearUser() {
     this.currentUser = null;
     localStorage.removeItem('auth_user');
   },
 
-  // Add survey response
   addSurveyResponse(response) {
     this.surveyResponses.push({
       ...response,
@@ -660,12 +884,10 @@ const AppState = {
     localStorage.setItem('surveyResponses', JSON.stringify(this.surveyResponses));
   },
 
-  // Get all responses
   getResponses() {
     return this.surveyResponses;
   },
 
-  // Get response stats
   getStats() {
     const responses = this.surveyResponses;
     if (responses.length === 0) {
@@ -676,15 +898,13 @@ const AppState = {
       };
     }
 
-    const ratings = responses
-      .filter((r) => r.rating)
-      .map((r) => parseInt(r.rating));
-    const avgRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b, 0) / ratings.length : 0;
+    const ratings = responses.filter((r) => r.rating).map((r) => parseInt(r.rating));
+    const avgRating = ratings.length > 0 ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1) : 0;
 
     return {
       totalResponses: responses.length,
       completedSurveys: responses.length,
-      averageRating: avgRating.toFixed(1),
+      averageRating: avgRating,
     };
   },
 };
@@ -694,16 +914,13 @@ const AppState = {
 // ====================================
 
 const Auth = {
-  // Check if user is authenticated
   isAuthenticated() {
     return AppState.currentUser !== null;
   },
 
-  // Require authentication (redirect if not authenticated)
   requireAuth() {
     if (!this.isAuthenticated()) {
-      // Save current URL to return after login
-      AppState.returnUrl = window.location.href.split('/').pop() || 'index.html';
+      AppState.returnUrl = window.location.href.split('/').pop() || 'dashboard.html';
       sessionStorage.setItem('returnUrl', AppState.returnUrl);
       window.location.href = 'auth.html';
       return false;
@@ -711,7 +928,6 @@ const Auth = {
     return true;
   },
 
-  // Sign up
   signup(fullName, email, password) {
     const errors = this.validateSignup(fullName, email, password);
     if (Object.keys(errors).length > 0) {
@@ -727,7 +943,6 @@ const Auth = {
     return { success: true, user: result.user };
   },
 
-  // Sign in
   signin(email, password) {
     const errors = this.validateSignin(email, password);
     if (Object.keys(errors).length > 0) {
@@ -743,7 +958,6 @@ const Auth = {
     return { success: true, user: result.user };
   },
 
-  // Validate signup
   validateSignup(fullName, email, password) {
     const errors = {};
 
@@ -762,7 +976,6 @@ const Auth = {
     return errors;
   },
 
-  // Validate signin
   validateSignin(email, password) {
     const errors = {};
 
@@ -777,13 +990,11 @@ const Auth = {
     return errors;
   },
 
-  // Email validation
   isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   },
 
-  // Get password strength
   getPasswordStrength(password) {
     if (password.length < 8) return 'weak';
     if (password.length < 12) return 'fair';
@@ -798,7 +1009,6 @@ const Auth = {
 // ====================================
 
 const FormValidator = {
-  // Show error
   showError(fieldName, message) {
     const field = document.querySelector(`[data-field="${fieldName}"]`);
     if (!field) return;
@@ -811,7 +1021,6 @@ const FormValidator = {
     }
   },
 
-  // Show success
   showSuccess(fieldName) {
     const field = document.querySelector(`[data-field="${fieldName}"]`);
     if (!field) return;
@@ -823,7 +1032,6 @@ const FormValidator = {
     }
   },
 
-  // Clear errors
   clearErrors() {
     document.querySelectorAll('.form-error').forEach((el) => {
       el.classList.remove('show');
@@ -833,7 +1041,6 @@ const FormValidator = {
     });
   },
 
-  // Validate password match
   validatePasswordMatch(password, confirmPassword) {
     return password === confirmPassword;
   },
@@ -844,7 +1051,6 @@ const FormValidator = {
 // ====================================
 
 const Toast = {
-  // Show toast notification
   show(message, type = 'info', duration = 3000) {
     const container = document.getElementById('toast-container');
     if (!container) {
@@ -884,7 +1090,6 @@ const Toast = {
 // ====================================
 
 const Modal = {
-  // Show modal
   show(title, message, icon = '✓', actions = null) {
     const overlay = document.getElementById('modal-overlay');
     const modal = document.getElementById('modal');
@@ -903,7 +1108,6 @@ const Modal = {
     modalMessage.textContent = message;
     modalIcon.textContent = icon;
 
-    // Clear previous actions
     modalActions.innerHTML = '';
 
     if (actions) {
@@ -928,7 +1132,6 @@ const Modal = {
     overlay.classList.add('show');
   },
 
-  // Hide modal
   hide() {
     const overlay = document.getElementById('modal-overlay');
     if (overlay) {
@@ -936,7 +1139,6 @@ const Modal = {
     }
   },
 
-  // Create modal HTML
   createModal() {
     const overlay = document.createElement('div');
     overlay.id = 'modal-overlay';
@@ -966,49 +1168,17 @@ const Modal = {
 };
 
 // ====================================
-// SURVEY NAVIGATION
+// SURVEY NAVIGATION & LOGIC
 // ====================================
 
 const Survey = {
-  questions: [
-    {
-      id: 'q1',
-      type: 'radio',
-      question: 'How satisfied are you with our service?',
-      options: ['Very Satisfied', 'Satisfied', 'Neutral', 'Dissatisfied'],
-    },
-    {
-      id: 'q2',
-      type: 'checkbox',
-      question: 'Which features do you use most? (Select all that apply)',
-      options: ['Data Analysis', 'Real-time Updates', 'Mobile App', 'Reporting'],
-    },
-    {
-      id: 'q3',
-      type: 'rating',
-      question: 'Rate your overall experience (1-5 stars)',
-    },
-    {
-      id: 'q4',
-      type: 'text',
-      question: 'What could we improve?',
-      placeholder: 'Your feedback here...',
-    },
-    {
-      id: 'q5',
-      type: 'dropdown',
-      question: 'How often do you use our service?',
-      options: ['Daily', 'Weekly', 'Monthly', 'Occasionally'],
-    },
-  ],
+  questions: [],
 
-  // Initialize survey
   init() {
     AppState.currentStep = 0;
     this.renderStep();
   },
 
-  // Render current step
   renderStep() {
     const container = document.getElementById('survey-container');
     if (!container) return;
@@ -1078,25 +1248,19 @@ const Survey = {
 
     questionHTML += `</div>`;
 
-    // Update progress
     document.querySelector('.progress-fill').style.width = `${progress}%`;
 
-    // Update stepper
     this.updateStepper();
 
-    // Render question
     container.innerHTML = questionHTML;
 
-    // Update survey controls
     this.updateControls();
 
-    // Add event listeners for rating stars
     if (step.type === 'rating') {
       document.querySelectorAll('.star').forEach((star) => {
         star.addEventListener('click', (e) => {
           document.querySelectorAll('.star').forEach((s) => s.classList.remove('active'));
           star.classList.add('active');
-          // Set value for all stars up to this one
           const value = e.target.dataset.value;
           document.querySelectorAll('.star').forEach((s) => {
             if (parseInt(s.dataset.value) <= value) {
@@ -1108,7 +1272,6 @@ const Survey = {
     }
   },
 
-  // Update stepper
   updateStepper() {
     document.querySelectorAll('.step').forEach((step, index) => {
       step.classList.remove('active', 'completed');
@@ -1120,7 +1283,6 @@ const Survey = {
     });
   },
 
-  // Update controls
   updateControls() {
     const backBtn = document.getElementById('btn-back');
     const nextBtn = document.getElementById('btn-next');
@@ -1139,27 +1301,25 @@ const Survey = {
     }
   },
 
-  // Get answer
   getAnswer() {
     const step = this.questions[AppState.currentStep];
     let answer;
 
     if (step.type === 'checkbox') {
-      answer = Array.from(document.querySelectorAll(`input[name="${step.id}"]:checked`)).map(
-        (el) => el.value
-      );
+      answer = Array.from(document.querySelectorAll(`input[name="${step.id}"]:checked`)).map((el) => el.value);
     } else if (step.type === 'rating') {
       const activeStar = document.querySelector('.star.active');
       answer = activeStar ? activeStar.dataset.value : null;
     } else {
-      const input = document.querySelector(`input[name="${step.id}"], select[name="${step.id}"], textarea[name="${step.id}"]`);
+      const input = document.querySelector(
+        `input[name="${step.id}"], select[name="${step.id}"], textarea[name="${step.id}"]`
+      );
       answer = input ? input.value : null;
     }
 
     return answer;
   },
 
-  // Next step
   next() {
     const answer = this.getAnswer();
     if (!answer || (Array.isArray(answer) && answer.length === 0)) {
@@ -1174,7 +1334,6 @@ const Survey = {
     this.renderStep();
   },
 
-  // Back step
   back() {
     AppState.currentStep--;
     if (AppState.currentStep < 0) {
@@ -1183,7 +1342,6 @@ const Survey = {
     this.renderStep();
   },
 
-  // Submit survey
   submit() {
     const answer = this.getAnswer();
     if (!answer || (Array.isArray(answer) && answer.length === 0)) {
@@ -1191,15 +1349,16 @@ const Survey = {
       return;
     }
 
-    // Collect all responses
     const responses = {};
     this.questions.forEach((q) => {
-      const input = document.querySelector(`input[name="${q.id}"], select[name="${q.id}"], textarea[name="${q.id}"]`);
+      const input = document.querySelector(
+        `input[name="${q.id}"], select[name="${q.id}"], textarea[name="${q.id}"]`
+      );
       if (input) {
         if (q.type === 'checkbox') {
-          responses[q.id] = Array.from(
-            document.querySelectorAll(`input[name="${q.id}"]:checked`)
-          ).map((el) => el.value);
+          responses[q.id] = Array.from(document.querySelectorAll(`input[name="${q.id}"]:checked`)).map(
+            (el) => el.value
+          );
         } else if (q.type === 'rating') {
           const activeStar = document.querySelector('.star.active');
           responses[q.id] = activeStar ? activeStar.dataset.value : null;
@@ -1212,7 +1371,7 @@ const Survey = {
 
     AppState.addSurveyResponse(responses);
 
-    Modal.show('Survey Completed! ✓', 'Thank you for completing the survey. Your feedback is valuable to us.', '✓', [
+    Modal.show('Survey Completed! ✓', 'Thank you for completing the survey.', '✓', [
       {
         text: 'View Results',
         class: 'btn-primary',
@@ -1236,7 +1395,6 @@ const Survey = {
 // ====================================
 
 const Chart = {
-  // Simple bar chart using canvas
   renderBarChart(canvasId, data, labels) {
     const canvas = document.getElementById(canvasId);
     if (!canvas) return;
@@ -1248,11 +1406,9 @@ const Chart = {
     const maxValue = Math.max(...data);
     const padding = 40;
 
-    // Clear canvas
     ctx.fillStyle = 'rgba(30, 41, 59, 0.5)';
     ctx.fillRect(0, 0, width, height);
 
-    // Draw grid
     ctx.strokeStyle = 'rgba(148, 163, 184, 0.1)';
     ctx.lineWidth = 1;
     for (let i = 0; i <= 5; i++) {
@@ -1263,13 +1419,11 @@ const Chart = {
       ctx.stroke();
     }
 
-    // Draw bars
     data.forEach((value, index) => {
       const barHeight = ((value / maxValue) * (height - padding * 2)) || 0;
       const x = padding + index * (barWidth * 1.5) + barWidth * 0.25;
       const y = height - padding - barHeight;
 
-      // Gradient
       const gradient = ctx.createLinearGradient(0, y, 0, height - padding);
       gradient.addColorStop(0, '#6366f1');
       gradient.addColorStop(1, '#8b5cf6');
@@ -1277,17 +1431,14 @@ const Chart = {
       ctx.fillStyle = gradient;
       ctx.fillRect(x, y, barWidth, barHeight);
 
-      // Label
       ctx.fillStyle = '#cbd5e1';
       ctx.font = '12px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText(labels[index], x + barWidth / 2, height - padding + 20);
 
-      // Value
       ctx.fillText(value, x + barWidth / 2, y - 5);
     });
 
-    // Y-axis label
     ctx.save();
     ctx.rotate(-Math.PI / 2);
     ctx.fillStyle = '#94a3b8';
@@ -1305,10 +1456,8 @@ const Chart = {
 document.addEventListener('DOMContentLoaded', () => {
   AppState.init();
 
-  // Set up navigation links
   setupNavigation();
 
-  // Add fade-out animation for toast
   const style = document.createElement('style');
   style.textContent = `
     @keyframes fadeOut {
@@ -1320,7 +1469,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function setupNavigation() {
-  // Home
   const homeLink = document.getElementById('nav-home');
   if (homeLink) {
     homeLink.addEventListener('click', (e) => {
@@ -1329,17 +1477,15 @@ function setupNavigation() {
     });
   }
 
-  // Survey
   const surveyLink = document.getElementById('nav-survey');
   if (surveyLink) {
     surveyLink.addEventListener('click', (e) => {
       e.preventDefault();
       if (!Auth.requireAuth()) return;
-      window.location.href = 'survey.html';
+      window.location.href = 'dashboard.html';
     });
   }
 
-  // Dashboard
   const dashboardLink = document.getElementById('nav-dashboard');
   if (dashboardLink) {
     dashboardLink.addEventListener('click', (e) => {
@@ -1349,7 +1495,6 @@ function setupNavigation() {
     });
   }
 
-  // Login
   const loginLink = document.getElementById('nav-login');
   if (loginLink) {
     loginLink.addEventListener('click', (e) => {
@@ -1358,7 +1503,6 @@ function setupNavigation() {
     });
   }
 
-  // Logout
   const logoutLink = document.getElementById('nav-logout');
   if (logoutLink) {
     logoutLink.addEventListener('click', (e) => {
@@ -1371,7 +1515,6 @@ function setupNavigation() {
     });
   }
 
-  // Update navbar based on auth state
   updateNavbar();
 }
 
@@ -1407,7 +1550,7 @@ function updateNavbar() {
   }
 }
 
-// Expose functions globally for inline event handlers
+// Expose globals
 window.Survey = Survey;
 window.Auth = Auth;
 window.FormValidator = FormValidator;
@@ -1419,3 +1562,6 @@ window.setLanguage = setLanguage;
 window.getTranslation = getTranslation;
 window.applyTranslations = applyTranslations;
 window.UserDB = UserDB;
+window.SurveyDB = SurveyDB;
+window.SubmissionDB = SubmissionDB;
+window.AppState = AppState;

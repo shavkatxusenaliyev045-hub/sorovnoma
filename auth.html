@@ -307,7 +307,7 @@
         setTimeout(() => {
           const returnUrl = AppState.returnUrl;
           sessionStorage.removeItem('returnUrl');
-          window.location.href = returnUrl || 'index.html';
+          window.location.href = returnUrl || 'dashboard.html';
         }, 500);
       } else {
         Object.entries(result.errors).forEach(([field, message]) => {

@@ -1098,6 +1098,85 @@ footer {
 }
 
 /* ====================================
+   SURVEY PLATFORM SPECIFIC STYLES
+   ==================================== */
+
+.survey-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-lg);
+}
+
+.survey-card h3 {
+  margin-bottom: var(--spacing-sm);
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-draft {
+  background: rgba(148, 163, 184, 0.2);
+  color: var(--text-tertiary);
+}
+
+.status-lobby {
+  background: rgba(251, 146, 60, 0.2);
+  color: #fb923c;
+}
+
+.status-live {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--success);
+  animation: pulse 2s infinite;
+}
+
+.status-closed {
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--error);
+}
+
+.question-item {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 8px;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.question-text-input,
+.question-type-select {
+  padding: 0.75rem;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: inherit;
+  transition: all var(--transition-base);
+}
+
+.question-text-input:focus,
+.question-type-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.survey-step {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+/* ====================================
    RESPONSIVE DESIGN
    ==================================== */
 

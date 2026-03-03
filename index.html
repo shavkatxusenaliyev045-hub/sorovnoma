@@ -34,14 +34,13 @@
   <main class="page">
     <!-- Hero Section -->
     <section class="hero container">
-      <h1 data-i18n="home.heroTitle">Share Your Voice Through Surveys</h1>
+      <h1 data-i18n="home.heroTitle">Create & Share Surveys Instantly</h1>
       <p data-i18n="home.heroDescription">
-        Join our premium survey platform to share your opinions, influence decisions, and earn rewards.
-        Your feedback matters!
+        Build surveys, share invite links, gather responses in real-time. Perfect for educators, researchers, and teams.
       </p>
       <div class="hero-buttons">
         <button class="btn btn-primary" onclick="handleStartSurvey()" data-i18n="home.startSurvey">
-          ✨ Start Survey
+          ✨ Create Survey
         </button>
         <button class="btn btn-secondary" onclick="handleGoDashboard()" data-i18n="home.goDashboard">
           📊 Go to Dashboard
@@ -227,11 +226,11 @@
 
     function handleStartSurvey() {
       if (!Auth.isAuthenticated()) {
-        AppState.returnUrl = 'survey.html';
-        sessionStorage.setItem('returnUrl', 'survey.html');
+        AppState.returnUrl = 'dashboard.html';
+        sessionStorage.setItem('returnUrl', 'dashboard.html');
         window.location.href = 'auth.html';
       } else {
-        window.location.href = 'survey.html';
+        window.location.href = 'dashboard.html';
       }
     }
 
